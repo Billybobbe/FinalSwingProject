@@ -26,6 +26,5 @@ public class GraphicsWindow extends JPanel{
                 }
             }
         }
-        repaint();
     }
 }

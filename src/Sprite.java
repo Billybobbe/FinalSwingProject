@@ -8,15 +8,17 @@ public class Sprite {
     private double x;
     private double y;
 
-    private double speedX;
-    private double speedY;
+    protected double speedX;
+    protected double speedY;
 
-    public Sprite(Image i, int x, int y, int width, int height) {
+    public Sprite(Image i, int x, int y, int width, int height, int speedX, int speedY) {
         this.i = i;
         this.width = width;
         this.height = height;
         this.x = x;
         this.y = y;
+        this.speedX = speedX;
+        this.speedY = speedY;
     }
 
     public int getWidth() {
@@ -36,11 +38,11 @@ public class Sprite {
         y += speedY;
     }
 
-    public double returnX() {
+    public double getX() {
         return x;
     }
 
-    public double returnY() {
+    public double getY() {
         return y;
     }
 
