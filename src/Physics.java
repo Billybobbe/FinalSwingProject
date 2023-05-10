@@ -1,10 +1,17 @@
 public class Physics {
     private Sprite[][] gameArea;
 
-    public Physics(){
-        this.gameArea = new Sprite[1000][1000];
+    public Physics(int xSize, int ySize){
+        this.gameArea = new Sprite[xSize][ySize];
     }
     public void updatePhysics() {
+        for(int i = 0; i < gameArea.length; i++){
+            for(int r = 0; r < gameArea[0].length; r++){
+                if(gameArea[i][r] != null){
+
+                }
+            }
+        }
     }
     public Sprite[][] getSpriteArray(){
         return gameArea;

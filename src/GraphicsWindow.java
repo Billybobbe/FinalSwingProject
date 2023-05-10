@@ -1,13 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.awt.image.ImageObserver;
 
-public class GraphicsWindow extends JPanel {
+public class GraphicsWindow extends JPanel{
     private Physics phys;
 
     public GraphicsWindow(Physics physics){
         this.phys = physics;
-        setBackground(Color.white);
+        setBackground(Color.RED);
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
