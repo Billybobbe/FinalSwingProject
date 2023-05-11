@@ -15,8 +15,9 @@ public class Main {
 
         Player plr = new Player(gw);
         p.addSprite(plr);
-        Projectile ball = new Projectile(ImageIO.read(new URL("https://cdn.pixabay.com/photo/2013/07/12/15/29/ball-149922_1280.png")), 200, 200, 10, 10, 0 , 0);
+        Projectile ball = new Projectile(ImageIO.read(new URL("https://cdn.pixabay.com/photo/2013/07/12/15/29/ball-149922_1280.png")), 200, 200, 10, 10, 0.03, 0.05);
         p.addSprite(ball);
+
         Frame f = new Frame();
         f.add(gw);
         f.add(new JPanel()); //will add scoring n stuff here
@@ -25,6 +26,7 @@ public class Main {
         f.setResizable(false);
         f.setVisible(true);
         while (true){
+
             p.updatePhysics();
             gw.repaint();
             Thread.sleep(5);
