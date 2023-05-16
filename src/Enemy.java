@@ -5,13 +5,15 @@ import java.io.IOException;
 
 public class Enemy extends Sprite {
     private int numBullets = 10;
+    private int health = 1;
 
     public Enemy(Image i, double x, double y, int width, int height, double speedX, double speedY) {
         super(i, x, y, width, height, speedX, speedY);
     }
-    public Enemy(Image i, double x, double y, int width, int height, double speedX, double speedY, int numBullets) {
+    public Enemy(Image i, double x, double y, int width, int height, double speedX, double speedY, int numBullets, int health) {
         super(i, x, y, width, height, speedX, speedY);
         this.numBullets = numBullets;
+        this.health = health;
     }
     public void attack(int numOfPj, int speed) throws IOException {
         PhysicsAlt p = MainGame.returnGamePhysics();
@@ -27,5 +29,11 @@ public class Enemy extends Sprite {
         if(Math.random()*10<0.1 && getY()<200){
             attack(numBullets, 1);
         }
+    }
+    public void setHealth(int health){
+        this.health = health;
+    }
+    public int getHealth(){
+        return health;
     }
 }

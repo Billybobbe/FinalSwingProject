@@ -71,7 +71,7 @@ public class MainGame {
 
     public static void spawnEnemies(double frequency, int bulletsPerEnemy) {
         if (Math.random() < frequency) {
-            p.addSprite(new Enemy(Resource.DEFAULT_ENEMY, (int)(Math.random()*480), -20, 40, 40, Math.random()*6-3, Math.random()*3, bulletsPerEnemy));
+            p.addSprite(new Enemy(Resource.DEFAULT_ENEMY, (int)(Math.random()*480), -20, 40, 40, Math.random()*6-3, Math.random()*3, bulletsPerEnemy, 1));
         }
     }
     public static int getTime(){

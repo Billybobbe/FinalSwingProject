@@ -66,6 +66,22 @@ public class PhysicsAlt {
                 }
             }
         }
+        for(Sprite sp : sprites){
+            for(Sprite sp2 : sprites){
+                if(sp instanceof Enemy && sp2 instanceof PlayerProjectile){
+                    double spCenterX = sp.getX() + sp.getWidth()/2.0;
+                    double spCenterY = sp.getY() + sp.getHeight()/2.0;
+                    double distance = Math.sqrt(Math.pow((spCenterX-sp2.getX()),2) + Math.pow((spCenterY-sp2.getY()),2));
+                    if(distance<=12){
+                        ((Enemy) sp).setHealth(((Enemy) sp).getHealth()- ((PlayerProjectile) sp2).getDamage());
+                        if(((Enemy) sp).getHealth()<=0){
+                            sprites.remove(sp);
+                            sprites.remove(sp2);
+                        }
+                    }
+                }
+            }
+        }
 
     }
 

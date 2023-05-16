@@ -64,7 +64,7 @@ public class Player extends Sprite implements KeyListener {
     }
 
     public void shoot() throws IOException {
-        MainGame.returnGamePhysics().addSprite(new Projectile(getX(), getY(), 0, -10));
-        MainGame.returnGamePhysics().addSprite(new Projectile(getX()+getWidth()/2.0, getY(), 0, -10));
+        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(getX(), getY(), 0, -10, 10));
+        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(getX()+getWidth()/2.0, getY(), 0, -10, 10));
     }
 }
