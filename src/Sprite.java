@@ -11,7 +11,7 @@ public class Sprite {
     protected double speedX;
     protected double speedY;
 
-    public Sprite(Image i, int x, int y, int width, int height, double speedX, double speedY) {
+    public Sprite(Image i, double x, double y, int width, int height, double speedX, double speedY) {
         this.i = i;
         this.width = width;
         this.height = height;

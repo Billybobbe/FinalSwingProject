@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
-        Physics p = new Physics(480, 480);
+        PhysicsAlt p = new PhysicsAlt(480, 480);
 
         GraphicsWindow gw = new GraphicsWindow(p);
         gw.setBounds(0,0,480,480);
@@ -20,16 +20,27 @@ public class Main {
 
         Frame f = new Frame();
         f.add(gw);
+
         f.add(new JPanel()); //will add scoring n stuff here
         f.pack();
         f.setSize(640,480);
         f.setResizable(false);
         f.setVisible(true);
-        while (true){
 
+        for(int i = 0; i<10; i++){
+            p.addSprite(new Projectile(ImageIO.read(new URL("https://cdn.pixabay.com/photo/2013/07/12/15/29/ball-149922_1280.png")), (int)(Math.random()*300), (int)(Math.random()*300), 10, 10, (int)(Math.random()*3), (int)(Math.random()*3)));
+
+        }
+
+        Enemy e = new Enemy(ImageIO.read(new URL("https://cdn.pixabay.com/photo/2013/07/12/15/29/ball-149922_1280.png")), 300, 300, 10, 10, 0 , 0);
+        p.addSprite(e);
+
+
+        while (true){
             p.updatePhysics();
             gw.repaint();
-            Thread.sleep(5);
+            Thread.sleep(17);
+
         }
     }
 }
