@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.IOException;
 
 public class Sprite {
     private int width;
@@ -52,6 +53,9 @@ public class Sprite {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public void act() throws IOException {
     }
 
 }

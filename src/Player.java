@@ -10,6 +10,8 @@ import java.net.URL;
 
 public class Player extends Sprite implements KeyListener {
     private final double speed = 3;
+    private int power = 0;
+    private boolean isShooting = false;
     public Player(GraphicsWindow gw) throws IOException {
         super(ImageIO.read(new File("res/player.png")), 30, 50, 30, 70, 0, 0);
         gw.addKeyListener(this);
@@ -18,6 +20,14 @@ public class Player extends Sprite implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void act() throws IOException {
+        if(isShooting){
+            if(MainGame.getTime() % 5 == 0)
+            shoot();
+        }
     }
 
     @Override
@@ -34,6 +44,9 @@ public class Player extends Sprite implements KeyListener {
         if(e.getKeyCode() == 40){
             speedY = speed;
         }
+        if(e.getKeyCode() == 90){
+            isShooting = true;
+        }
     }
 
     @Override
@@ -44,5 +57,14 @@ public class Player extends Sprite implements KeyListener {
         if(e.getKeyCode()==38 || e.getKeyCode()==40){
             speedY = 0;
         }
+        if(e.getKeyCode()==90){
+            isShooting = false;
+        }
+
+    }
+
+    public void shoot() throws IOException {
+        MainGame.returnGamePhysics().addSprite(new Projectile(getX(), getY(), 0, -10));
+        MainGame.returnGamePhysics().addSprite(new Projectile(getX()+getWidth()/2.0, getY(), 0, -10));
     }
 }

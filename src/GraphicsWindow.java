@@ -13,14 +13,10 @@ public class GraphicsWindow extends JPanel{
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+        g.drawImage(Resource.DEFAULT_BACKGROUND, 0, 0, null);
         ArrayList<Sprite> arr = phys.getSpriteArray();
         for(Sprite sp : arr){
-            g.drawImage(sp.getimage(), (int)sp.getX() , (int)sp.getY(), sp.getWidth(), sp.getHeight(), new ImageObserver() {
-                @Override
-                public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
-                    return false;
-                }
-            });
+            g.drawImage(sp.getimage(), (int)sp.getX() , (int)sp.getY(), sp.getWidth(), sp.getHeight(), null);
         }
     }
 }

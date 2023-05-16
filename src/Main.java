@@ -1,4 +1,6 @@
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -7,8 +9,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        PhysicsAlt p = new PhysicsAlt(480, 480);
+    public static void main(String[] args) throws IOException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
+        /* PhysicsAlt p = new PhysicsAlt(480, 480);
 
         GraphicsWindow gw = new GraphicsWindow(p);
         gw.setBounds(0,0,480,480);
@@ -42,5 +44,13 @@ public class Main {
             Thread.sleep(17);
 
         }
+         */
+
+        MainGame.start();
+
+
+
     }
+
+
 }

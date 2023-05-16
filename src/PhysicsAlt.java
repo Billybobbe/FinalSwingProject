@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PhysicsAlt {
@@ -15,12 +16,13 @@ public class PhysicsAlt {
         this.gameAreaY = gameAreaY;
     }
 
-    public void updatePhysics() {
+    public void updatePhysics() throws IOException {
         for (int i = 0; i<sprites.size(); i++) {
             Sprite sp = sprites.get(i);
             double oldX = sp.getX();
             double oldY = sp.getY();
             sp.updatePosition();
+            sp.act();
             if(sp instanceof Player && (sp.getX() < minXPlayerBound || sp.getX() > maxXPlayerBound || sp.getY() < minYPlayerBound || sp.getY() > maxYPlayerBound)){
                 double newX = sp.getX();
                 double newY = sp.getY();
@@ -35,7 +37,7 @@ public class PhysicsAlt {
                     sp.setY(oldY);
                 }
             }
-            else if(sp.getX()<0 || sp.getX()>=gameAreaX || sp.getY()<0 || sp.getX()>=gameAreaY){
+            else if(sp.getX()<-100 || sp.getX()>=gameAreaX+10 || sp.getY()<-100 || sp.getX()>=gameAreaY+10){
                 sprites.remove(sp);
                 i--;
             }
