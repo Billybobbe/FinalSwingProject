@@ -10,7 +10,7 @@ public class Resource{
 
     static {
         try {
-            DEFAULT_ENEMY = ImageIO.read(new File("res/enemy1.png"));
+            DEFAULT_ENEMY = ImageIO.read(new File("res/player.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

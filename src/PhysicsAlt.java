@@ -66,8 +66,11 @@ public class PhysicsAlt {
                 }
             }
         }
-        for(Sprite sp : sprites){
-            for(Sprite sp2 : sprites){
+        for(int i = 0; i<sprites.size(); i++) {
+            for(int r = 0; r<sprites.size(); r++){
+                Sprite sp = sprites.get(i);
+                Sprite sp2 = sprites.get(r);
+
                 if(sp instanceof Enemy && sp2 instanceof PlayerProjectile){
                     double spCenterX = sp.getX() + sp.getWidth()/2.0;
                     double spCenterY = sp.getY() + sp.getHeight()/2.0;
@@ -77,6 +80,14 @@ public class PhysicsAlt {
                         if(((Enemy) sp).getHealth()<=0){
                             sprites.remove(sp);
                             sprites.remove(sp2);
+                            if(i<r){
+                                i-=1;
+                                r-=2;
+                            }
+                            else{
+                                i-=2;
+                                r-=1;
+                            }
                         }
                     }
                 }
