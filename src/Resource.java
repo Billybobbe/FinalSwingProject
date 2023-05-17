@@ -10,7 +10,7 @@ public class Resource{
 
     static {
         try {
-            DEFAULT_ENEMY = ImageIO.read(new File("res/player.png"));
+            DEFAULT_ENEMY = ImageIO.read(new File("res/enemy1.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -35,4 +35,25 @@ public class Resource{
             throw new RuntimeException(e);
         }
     }
+
+    public static final Image DEFAULT_PLAYER_PROJECTILE;
+
+    static {
+        try {
+            DEFAULT_PLAYER_PROJECTILE = ImageIO.read(new File("res/playerprojectile.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static final Image DEFAULT_ENEMY_DEATH;
+
+    static {
+        try {
+            DEFAULT_ENEMY_DEATH = ImageIO.read(new File("res/enemydeath.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

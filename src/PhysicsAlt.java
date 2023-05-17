@@ -37,7 +37,7 @@ public class PhysicsAlt {
                     sp.setY(oldY);
                 }
             }
-            else if(sp.getX()<-100 || sp.getX()>=gameAreaX+10 || sp.getY()<-100 || sp.getX()>=gameAreaY+10){
+            else if(sp.getX()<-100 || sp.getX()>=gameAreaX+100 || sp.getY()<-100 || sp.getX()>=gameAreaY+100){
                 sprites.remove(sp);
                 i--;
             }
@@ -78,8 +78,8 @@ public class PhysicsAlt {
                     if(distance<=12){
                         ((Enemy) sp).setHealth(((Enemy) sp).getHealth()- ((PlayerProjectile) sp2).getDamage());
                         if(((Enemy) sp).getHealth()<=0){
-                            sprites.remove(sp);
-                            sprites.remove(sp2);
+                            sp.remove();
+                            sp2.remove();
                             if(i<r){
                                 i-=1;
                                 r-=2;
@@ -101,5 +101,9 @@ public class PhysicsAlt {
     }
     public ArrayList<Sprite> getSpriteArray(){
         return sprites;
+    }
+
+    public void remove(Sprite sp){
+        sprites.remove(sp);
     }
 }

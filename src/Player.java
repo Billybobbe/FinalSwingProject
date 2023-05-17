@@ -16,6 +16,7 @@ public class Player extends Sprite implements KeyListener {
         super(ImageIO.read(new File("res/player.png")), 30, 50, 30, 70, 0, 0);
         gw.addKeyListener(this);
         gw.setFocusable(true);
+        gw.requestFocus();
     }
 
     @Override
@@ -64,7 +65,7 @@ public class Player extends Sprite implements KeyListener {
     }
 
     public void shoot() throws IOException {
-        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(getX(), getY(), 0, -10, 10));
-        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(getX()+getWidth()/2.0, getY(), 0, -10, 10));
+        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX(), getY(), 10, 10, 0, -10, 10));
+        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/2.0, getY(), 10, 10, 0, -10, 10));
     }
 }

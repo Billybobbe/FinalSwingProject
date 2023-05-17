@@ -2,6 +2,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Enemy extends Sprite {
     private int numBullets = 10;
@@ -29,6 +30,13 @@ public class Enemy extends Sprite {
         if(Math.random()*10<0.1 && getY()<200){
             attack(numBullets, 1);
         }
+    }
+
+    @Override
+    public void remove(){
+        PhysicsAlt phys = MainGame.returnGamePhysics();
+        phys.addSprite(new EnemyDeathEffect(Resource.DEFAULT_ENEMY_DEATH, getX()+getWidth()/4.0, getY()+getHeight()/4.0, 0, 0, 0, 0));
+        phys.remove(this);
     }
     public void setHealth(int health){
         this.health = health;

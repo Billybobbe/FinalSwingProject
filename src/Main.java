@@ -46,7 +46,7 @@ public class Main {
         }
          */
 
-        MainGame.start();
+        MainGame.startTitle();
 
 
 

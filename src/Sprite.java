@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Sprite {
     private int width;
@@ -56,6 +57,15 @@ public class Sprite {
     }
 
     public void act() throws IOException {
+    }
+    public void setWidth(int width){
+        this.width = width;
+    }
+    public void setHeight(int height){
+        this.height = height;
+    }
+    public void remove(){
+        MainGame.returnGamePhysics().remove(this);
     }
 
 }
