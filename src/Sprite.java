@@ -68,5 +68,8 @@ public class Sprite {
         MainGame.returnGamePhysics().remove(this);
     }
 
+    public void setImage(Image i){
+        this.i = i;
+    }
 }
 

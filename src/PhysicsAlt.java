@@ -61,7 +61,8 @@ public class PhysicsAlt {
             for(Sprite sp : sprites){
                 double distance = Math.sqrt(Math.pow((playerCenterX-sp.getX()),2) + Math.pow((playerCenterY-sp.getY()),2));
                 if(distance<=12){
-                    System.out.println("Collision");
+                    player.remove();
+                    MainGame.setLives(MainGame.getLives()-1);
                     break;
                 }
             }

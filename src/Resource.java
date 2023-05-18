@@ -1,16 +1,36 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Resource{
+    public static final Image DEFAULT_PLAYER;
+
+    static {
+        try {
+            DEFAULT_PLAYER = ImageIO.read(new File("res/player.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static final Image DEFAULT_ENEMY;
 
     static {
         try {
             DEFAULT_ENEMY = ImageIO.read(new File("res/enemy1.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static final Image DEFAULT_MENU_BACKGROUND;
+
+    static {
+        try {
+            DEFAULT_MENU_BACKGROUND = ImageIO.read(new URL("https://i.pinimg.com/originals/55/1d/7f/551d7fd19970f4c27431db6a40a7880b.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -55,5 +75,24 @@ public class Resource{
             throw new RuntimeException(e);
         }
     }
+
+    public static Image[] playerAnimLeft;
+    public static Image[] playerAnimRight;
+
+    public static void loadAnimations() throws IOException {
+        playerAnimLeft = buildArray("res/playerAnimLeft");
+        playerAnimRight = buildArray("res/playerAnimRight");
+
+
+    }
+    public static Image[] buildArray(String path) throws IOException {
+        File[] dir = new File(path).listFiles();
+        Image [] arr = new Image[dir.length];
+        for(int i = 0; i < dir.length; i++){
+            arr[i] = ImageIO.read(dir[i]);
+        }
+        return arr;
+    }
+
 
 }

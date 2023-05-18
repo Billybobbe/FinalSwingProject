@@ -15,7 +15,8 @@ public class GraphicsWindow extends JPanel{
         super.paintComponent(g);
         g.drawImage(Resource.DEFAULT_BACKGROUND, 0, 0, null);
         ArrayList<Sprite> arr = phys.getSpriteArray();
-        for(Sprite sp : arr){
+        for(int i = 0; i< arr.size(); i++){
+            Sprite sp = arr.get(i);
             g.drawImage(sp.getimage(), (int)sp.getX() , (int)sp.getY(), sp.getWidth(), sp.getHeight(), null);
         }
     }
