@@ -1,3 +1,5 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -16,7 +18,7 @@ public class PhysicsAlt {
         this.gameAreaY = gameAreaY;
     }
 
-    public void updatePhysics() throws IOException {
+    public void updatePhysics() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         for (int i = 0; i<sprites.size(); i++) {
             Sprite sp = sprites.get(i);
             double oldX = sp.getX();
@@ -46,7 +48,7 @@ public class PhysicsAlt {
         checkCollisions();
     }
 
-    public void checkCollisions(){
+    public void checkCollisions() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         Player player = null;
         for(int i = 0; i<sprites.size(); i++){
             Sprite sp = sprites.get(i);

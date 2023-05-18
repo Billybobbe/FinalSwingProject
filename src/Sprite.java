@@ -1,3 +1,5 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +58,7 @@ public class Sprite {
         this.y = y;
     }
 
-    public void act() throws IOException {
+    public void act() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
     }
     public void setWidth(int width){
         this.width = width;
@@ -64,7 +66,7 @@ public class Sprite {
     public void setHeight(int height){
         this.height = height;
     }
-    public void remove(){
+    public void remove() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         MainGame.returnGamePhysics().remove(this);
     }
 

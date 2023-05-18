@@ -189,6 +189,7 @@ public class MainGame {
 
         p.addSprite(plr);
 
+        Graphics windowBackground = game.getGraphics();
 
         time = 0;
         //Clip c1 = playMusic("res/Zun1.wav");
@@ -198,21 +199,29 @@ public class MainGame {
             double lastTime = System.currentTimeMillis();
             @Override
             public void run() {
-                spawnEnemies(0.01, 10);
-                try {
-                    p.updatePhysics();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                gw.repaint();
-                time++;
-                double current = System.currentTimeMillis();
-                double difference = current-lastTime;
-                difference = difference*0.001;
-                updateInfoPanel(difference, info);
-                lastTime = current;
-                if(!(time/60.0/60<=1)){
-                    level1timer.cancel();
+                while(time/60.0/60<=1){
+                    spawnEnemies(0.01, 10);
+                    try {
+                        p.updatePhysics();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (UnsupportedAudioFileException e) {
+                        throw new RuntimeException(e);
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
+                    gw.repaint();
+                    time++;
+                    double current = System.currentTimeMillis();
+                    double difference = current-lastTime;
+                    difference = difference*0.001;
+                    updateInfoPanel(difference, info);
+                    lastTime = current;
+                    try {
+                        Thread.sleep((long)16.666666);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         };
@@ -220,7 +229,6 @@ public class MainGame {
 
 
 
-        //c1.stop();
 
     }
 

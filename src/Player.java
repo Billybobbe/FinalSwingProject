@@ -1,4 +1,6 @@
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +29,7 @@ public class Player extends Sprite implements KeyListener {
     }
 
     @Override
-    public void act() throws IOException {
+    public void act() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         if(isShooting){
             if(MainGame.getTime() % 5 == 0)
                 shoot();
@@ -115,7 +117,7 @@ public class Player extends Sprite implements KeyListener {
         MainGame.returnGamePhysics().remove(this);
     }
 
-    public void shoot() throws IOException {
+    public void shoot() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/4.0, getY()+10, 10, 10, 0, -10, 10));
         MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/2.0, getY()+10, 10, 10, 0, -10, 10));
     }

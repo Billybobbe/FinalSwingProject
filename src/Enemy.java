@@ -1,4 +1,6 @@
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -22,24 +24,26 @@ public class Enemy extends Sprite {
         this.chanceofBP = chanceToDropBP;
         this.chanceofS = chanceToDropScore;
     }
-    public void attack(int numOfPj, int speed) throws IOException {
+    public void attack(int numOfPj, int speed) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         PhysicsAlt p = MainGame.returnGamePhysics();
         for(int i = 0; i <= numOfPj; i++){
             double speedX = Math.cos(2*Math.PI*i/numOfPj);
             double speedY = Math.sin(2*Math.PI*i/numOfPj);
             Projectile pj = new Projectile(Resource.PROJECTILE_1, getX(), getY(), 20, 20, speedX*speed, speedY*speed);
+            MainGame.playMusic("res/projectileSound.wav");
             p.addSprite(pj);
         }
     }
     @Override
-    public void act() throws IOException {
+    public void act() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         if(Math.random()*10<0.1 && getY()<200){
             attack(numBullets, 1);
         }
     }
 
     @Override
-    public void remove(){
+    public void remove() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        MainGame.playMusic("res/enemyDeath.wav");
         PhysicsAlt phys = MainGame.returnGamePhysics();
         phys.addSprite(new EnemyDeathEffect(Resource.DEFAULT_ENEMY_DEATH, getX()+getWidth()/4.0, getY()+getHeight()/4.0, 0, 0, 0, 0));
         double num = Math.random();

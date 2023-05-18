@@ -1,3 +1,5 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.io.IOException;
 
@@ -10,7 +12,7 @@ public class EnemyDeathEffect extends Sprite{
     }
 
     @Override
-    public void act() throws IOException {
+    public void act() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         setWidth(getWidth()+10);
         setHeight(getHeight()+10);
         setX(getX()-5);
