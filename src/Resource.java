@@ -75,6 +75,42 @@ public class Resource{
             throw new RuntimeException(e);
         }
     }
+    public static final Image PROJECTILE_1;
+
+    static {
+        try {
+            PROJECTILE_1 = ImageIO.read(new File("res/projectile1.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static final Image POWERITEM;
+
+    static {
+        try {
+            POWERITEM = ImageIO.read(new File("res/powerItem.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static final Image SCOREITEM;
+
+    static {
+        try {
+            SCOREITEM = ImageIO.read(new File("res/scoreitem.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static final Image THOUSAND_SCORE;
+
+    static {
+        try {
+            THOUSAND_SCORE = ImageIO.read(new File("res/1000point.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static Image[] playerAnimLeft;
     public static Image[] playerAnimRight;

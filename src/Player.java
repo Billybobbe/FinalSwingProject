@@ -12,12 +12,14 @@ import java.util.TimerTask;
 public class Player extends Sprite implements KeyListener {
     private final double speed = 3;
     private int power = 0;
+    Animation anim;
     private boolean isShooting = false;
     public Player(GraphicsWindow gw) throws IOException {
-        super(Resource.DEFAULT_PLAYER, 240, 410, 60, 140, 0, 0);
+        super(Resource.DEFAULT_PLAYER, 200, 370, 60, 140, 0, 0);
         gw.addKeyListener(this);
         gw.setFocusable(true);
         gw.requestFocus();
+        this.anim = new Animation(this);
     }
 
     @Override
@@ -36,12 +38,7 @@ public class Player extends Sprite implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == 37){
             if(speedX == 0){
-                Animation anim = null;
-                try {
-                    anim = new Animation(500, Resource.playerAnimLeft, this);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                anim.setAnimation(500, Resource.playerAnimLeft);
                 anim.play();
             }
             speedX = -speed;
@@ -49,12 +46,7 @@ public class Player extends Sprite implements KeyListener {
         }
         if(e.getKeyCode() == 39){
             if(speedX == 0){
-                Animation anim;
-                try {
-                    anim = new Animation(500, Resource.playerAnimRight, this);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                anim.setAnimation(500, Resource.playerAnimRight);
                 anim.play();
             }
             speedX = speed;
@@ -75,21 +67,11 @@ public class Player extends Sprite implements KeyListener {
     public void keyReleased(KeyEvent e) {
         if(e.getKeyCode()==37) {
             speedX = 0;
-            Animation anim;
-            try {
-                anim = new Animation(500, Resource.playerAnimLeft, this);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            anim.setAnimation(500, Resource.playerAnimLeft);
             anim.playReverse();
         }
         if(e.getKeyCode()==39){
-            Animation anim;
-            try {
-                anim = new Animation(500, Resource.playerAnimRight, this);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            anim.setAnimation(500, Resource.playerAnimRight);
             anim.playReverse();
             speedX = 0;
         }
@@ -117,11 +99,24 @@ public class Player extends Sprite implements KeyListener {
             }
         };
         t.schedule(tt, (long)0, (long)16.666);
+
+        java.util.Timer t2 = new java.util.Timer();
+        TimerTask tt2 = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    MainGame.returnGamePhysics().addSprite(new Player(MainGame.returnGraphicsWindow()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        t2.schedule(tt2, 1000);
         MainGame.returnGamePhysics().remove(this);
     }
 
     public void shoot() throws IOException {
-        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX(), getY(), 10, 10, 0, -10, 10));
-        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/2.0, getY(), 10, 10, 0, -10, 10));
+        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/4.0, getY()+10, 10, 10, 0, -10, 10));
+        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/2.0, getY()+10, 10, 10, 0, -10, 10));
     }
 }

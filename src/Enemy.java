@@ -7,21 +7,27 @@ import java.util.ArrayList;
 public class Enemy extends Sprite {
     private int numBullets = 10;
     private int health = 1;
+    private double chanceofP;
+    private double chanceofBP;
+    private double chanceofS;
 
     public Enemy(Image i, double x, double y, int width, int height, double speedX, double speedY) {
         super(i, x, y, width, height, speedX, speedY);
     }
-    public Enemy(Image i, double x, double y, int width, int height, double speedX, double speedY, int numBullets, int health) {
+    public Enemy(Image i, double x, double y, int width, int height, double speedX, double speedY, int numBullets, int health, double chanceToDropP, double chanceToDropBP, double chanceToDropScore) {
         super(i, x, y, width, height, speedX, speedY);
         this.numBullets = numBullets;
         this.health = health;
+        this.chanceofP = chanceToDropP;
+        this.chanceofBP = chanceToDropBP;
+        this.chanceofS = chanceToDropScore;
     }
     public void attack(int numOfPj, int speed) throws IOException {
         PhysicsAlt p = MainGame.returnGamePhysics();
         for(int i = 0; i <= numOfPj; i++){
             double speedX = Math.cos(2*Math.PI*i/numOfPj);
             double speedY = Math.sin(2*Math.PI*i/numOfPj);
-            Projectile pj = new Projectile(getX(), getY(), speedX*speed, speedY*speed);
+            Projectile pj = new Projectile(Resource.PROJECTILE_1, getX(), getY(), 20, 20, speedX*speed, speedY*speed);
             p.addSprite(pj);
         }
     }
@@ -36,8 +42,99 @@ public class Enemy extends Sprite {
     public void remove(){
         PhysicsAlt phys = MainGame.returnGamePhysics();
         phys.addSprite(new EnemyDeathEffect(Resource.DEFAULT_ENEMY_DEATH, getX()+getWidth()/4.0, getY()+getHeight()/4.0, 0, 0, 0, 0));
+        double num = Math.random();
+        System.out.println(num);
+        if(chanceofS<chanceofP && chanceofS<chanceofBP){
+            if(num<chanceofS){
+                dropS();
+            }
+            else{
+                if(chanceofP>chanceofBP){
+                    if(num<chanceofBP){
+                        dropBP();
+                    }
+                    else{
+                        dropP();
+                    }
+                }
+                else{
+                    if(num<chanceofP){
+                        dropP();
+                    }
+                    else{
+                        if(num<chanceofBP){
+                            dropBP();
+                        }
+                    }
+                }
+            }
+        }
+        else if(chanceofP<chanceofBP && chanceofP<chanceofS){
+            if(num<chanceofP){
+                dropP();
+            }
+            else{
+                if(chanceofS>chanceofBP){
+                    if(num<chanceofBP){
+                        dropBP();
+                    }
+                    else{
+                        if (num < chanceofS) {
+                            dropS();
+                        }
+                    }
+                }
+                else{
+                    if(num<chanceofS){
+                        dropS();
+                    }
+                    if(num<chanceofBP){
+                        dropBP();
+                    }
+                }
+            }
+        }
+        else{
+            if(num<chanceofBP){
+                dropBP();
+            }
+            else{
+                if(chanceofP>chanceofS){
+                    if(num<chanceofS){
+                        dropS();
+                    }
+                    else{
+                        if(num<chanceofP){
+                            dropP();
+                        }
+                    }
+                }
+                else{
+                    if(num<chanceofP){
+                        dropP();
+                    }
+                    else{
+                        if(num<chanceofS){
+                            dropS();
+                        }
+                    }
+                }
+            }
+
+        }
+
         phys.remove(this);
     }
+    public void dropS(){
+        MainGame.returnGamePhysics().addSprite(new ScoreItem(getX(), getY()));
+    }
+    public void dropBP(){
+        MainGame.returnGamePhysics().addSprite(new PowerItem(getX(), getY(), 20, 20, 10));
+    }
+    public void dropP(){
+        MainGame.returnGamePhysics().addSprite(new PowerItem(getX(), getY(), 1));
+    }
+
     public void setHealth(int health){
         this.health = health;
     }

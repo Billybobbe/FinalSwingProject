@@ -10,16 +10,21 @@ public class Animation {
     double time;
     Image[] frames;
     Sprite sp;
-    public Animation(double time, Image[] f, Sprite sp) throws IOException {
-        this.time = time; // in ms
+    Timer t;
+    public Animation(Sprite sp) throws IOException {
         this.sp = sp;
-        this.frames = f;
+        this.t = new Timer();
 
+    }
+    public void setAnimation(double time, Image[] frames){
+        this.time = time;
+        this.frames = frames;
     }
 
     public void play(){
-
-        Timer t = new Timer();
+        t.cancel();
+        t.purge();
+        t = new Timer();
         double waitPerImage = time/frames.length;
         TimerTask tt = new TimerTask() {
             int starttime = 0;
@@ -35,7 +40,9 @@ public class Animation {
         t.schedule(tt, 0L, (long) waitPerImage);
     }
     public void playReverse(){
-        Timer t = new Timer();
+        t.cancel();
+        t.purge();
+        t = new Timer();
         double waitPerImage = time/frames.length;
         TimerTask tt = new TimerTask() {
             int starttime = 0;

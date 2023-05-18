@@ -4,8 +4,8 @@ import java.util.ArrayList;
 public class PhysicsAlt {
     private int minXPlayerBound = 0;
     private int maxXPlayerBound = 439;
-    private int minYPlayerBound = 30;
-    private int maxYPlayerBound = 412;
+    private int minYPlayerBound = -20;
+    private int maxYPlayerBound = 370;
     private int gameAreaX;
     private int gameAreaY;
 
@@ -48,7 +48,8 @@ public class PhysicsAlt {
 
     public void checkCollisions(){
         Player player = null;
-        for(Sprite sp : sprites){
+        for(int i = 0; i<sprites.size(); i++){
+            Sprite sp = sprites.get(i);
             if(sp instanceof Player){
                 player = (Player)sp;
                 break;
@@ -58,12 +59,22 @@ public class PhysicsAlt {
             double playerCenterX = player.getX() + player.getWidth()/2.0;
             double playerCenterY = player.getY() + player.getHeight()/2.0;
 
-            for(Sprite sp : sprites){
+            for(int i = 0; i<sprites.size(); i++){
+                Sprite sp = sprites.get(i);
                 double distance = Math.sqrt(Math.pow((playerCenterX-sp.getX()),2) + Math.pow((playerCenterY-sp.getY()),2));
-                if(distance<=12){
+                if(distance<=12 && (sp instanceof Projectile || sp instanceof Enemy)){
                     player.remove();
                     MainGame.setLives(MainGame.getLives()-1);
                     break;
+                }
+                if(distance<=30 && sp instanceof PowerItem){
+                    MainGame.setNumPower(MainGame.getNumPower()+((PowerItem) sp).returnPower());
+                    sp.remove();
+                    i--;
+                }
+                if(distance<=30 && sp instanceof ScoreItem){
+                    MainGame.setScore(MainGame.getScore()+1000);
+                    sp.remove();
                 }
             }
         }
@@ -77,6 +88,7 @@ public class PhysicsAlt {
                     double spCenterY = sp.getY() + sp.getHeight()/2.0;
                     double distance = Math.sqrt(Math.pow((spCenterX-sp2.getX()),2) + Math.pow((spCenterY-sp2.getY()),2));
                     if(distance<=12){
+                        MainGame.setScore(MainGame.getScore()+100);
                         ((Enemy) sp).setHealth(((Enemy) sp).getHealth()- ((PlayerProjectile) sp2).getDamage());
                         if(((Enemy) sp).getHealth()<=0){
                             sp.remove();

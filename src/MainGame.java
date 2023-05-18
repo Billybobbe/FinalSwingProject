@@ -22,6 +22,9 @@ public class MainGame {
     private static JFrame game;
 
     private static int numOfLives = 3;
+    private static int numPower = 0;
+
+    private static int score;
 
 
     public static void start() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
@@ -226,6 +229,9 @@ public class MainGame {
         JLabel fps = new JLabel("fps  " + (int)(1/difference));
         fps.setBounds(120, 450, 40, 20);
         info.add(fps);
+        JLabel power = new JLabel("Power: " + numPower);
+        power.setBounds(20, 200, 140, 20);
+        info.add(power);
 
         JLabel lives = new JLabel("Lives: ");
         for(int i = 1; i< numOfLives; i++){
@@ -246,10 +252,12 @@ public class MainGame {
     public static PhysicsAlt returnGamePhysics(){
         return p;
     }
-
+    public static GraphicsWindow returnGraphicsWindow(){
+        return gw;
+    }
     public static void spawnEnemies(double frequency, int bulletsPerEnemy) {
         if (Math.random() < frequency) {
-            p.addSprite(new Enemy(Resource.DEFAULT_ENEMY, (int)(Math.random()*480), -40, 40, 40, Math.random()*6-3, Math.random()*3, bulletsPerEnemy, 1));
+            p.addSprite(new Enemy(Resource.DEFAULT_ENEMY, (int)(Math.random()*480), -40, 40, 40, Math.random()*4-2, Math.random()*3, bulletsPerEnemy, 1, 0.7, 0.2, 0.5));
         }
     }
     public static int getTime(){
@@ -261,7 +269,18 @@ public class MainGame {
     public static void setLives(int newNum){
         numOfLives = newNum;
     }
-
+    public static void setNumPower(int num){
+        numPower = num;
+    }
+    public static int getNumPower(){
+        return numPower;
+    }
+    public static int getScore(){
+        return score;
+    }
+    public static void setScore(int num){
+        score = num;
+    }
 
 
 }
