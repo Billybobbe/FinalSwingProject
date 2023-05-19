@@ -40,7 +40,7 @@ public class Player extends Sprite implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == 37){
             if(speedX == 0){
-                anim.setAnimation(500, Resource.playerAnimLeft);
+                anim.setAnimation(100, Resource.playerAnimLeft);
                 anim.play();
             }
             speedX = -speed;
@@ -48,7 +48,7 @@ public class Player extends Sprite implements KeyListener {
         }
         if(e.getKeyCode() == 39){
             if(speedX == 0){
-                anim.setAnimation(500, Resource.playerAnimRight);
+                anim.setAnimation(100, Resource.playerAnimRight);
                 anim.play();
             }
             speedX = speed;
@@ -69,11 +69,11 @@ public class Player extends Sprite implements KeyListener {
     public void keyReleased(KeyEvent e) {
         if(e.getKeyCode()==37) {
             speedX = 0;
-            anim.setAnimation(500, Resource.playerAnimLeft);
+            anim.setAnimation(100, Resource.playerAnimLeft);
             anim.playReverse();
         }
         if(e.getKeyCode()==39){
-            anim.setAnimation(500, Resource.playerAnimRight);
+            anim.setAnimation(100, Resource.playerAnimRight);
             anim.playReverse();
             speedX = 0;
         }

@@ -28,7 +28,15 @@ public class Boss extends Sprite{
     private double targetY;
     private double oldDist = Integer.MAX_VALUE;
 
-    public Boss(Image i, double x, double y, int width, int height, double speedX, double speedY, int attack1Health, int attack1Time, int attack2Health, int attack2Time, int attack3Health, int attack3Time, int attack4Health, int attack4Time, int attack5Health, int attack5Time) {
+    Animation anim;
+
+    Image[] rightAnim;
+    Image[] leftAnim;
+
+    public Boss(Image i, double x, double y, int width, int height, double speedX, double speedY,
+                int attack1Health, int attack1Time, int attack2Health, int attack2Time, int attack3Health,
+                int attack3Time, int attack4Health, int attack4Time, int attack5Health, int attack5Time,
+                Image[] rightAnim, Image[] leftAnim) throws IOException {
         super(i, x, y, width, height, speedX, speedY);
         this.attack1Health = attack1Health;
         this.attack1Time = attack1Time;
@@ -40,6 +48,9 @@ public class Boss extends Sprite{
         this.attack4Time = attack4Time;
         this.attack5Health = attack5Health;
         this.attack5Time = attack5Time;
+        anim = new Animation(this);
+        this.rightAnim = rightAnim;
+        this.leftAnim = leftAnim;
     }
 
 
@@ -82,18 +93,27 @@ public class Boss extends Sprite{
                 speedY *= divisior;
             }
             moving = true;
+            if(speedX<0){
+                anim.setAnimation(100, leftAnim);
+            }
+            else{
+                anim.setAnimation(100, rightAnim);
+            }
+            anim.play();
         }
         double distance = Math.sqrt(Math.pow(targetX-getX(),2) + Math.pow(targetY-getY(),2));
             if(distance>oldDist){
+                System.out.println(distance);
                 speedY = 0;
                 speedX = 0;
                 moving = false;
+                anim.playReverse();
             }
             else if(distance<50){
                 double x = 50-distance;
                 double y = 2/(x-40);
                 if(y<1 && y>0){
-                    speedX = speedX/speedX*y;
+                    speedX = y;
                     speedY = speedY/speedX*y;
                 }
             }
@@ -150,7 +170,7 @@ public class Boss extends Sprite{
             double x = 50-distance;
             double y = 2/(x-40);
             if(y<1 && y>0){
-                speedX = speedX/speedX*y;
+                speedX = y;
                 speedY = speedY/speedX*y;
             }
         }

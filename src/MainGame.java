@@ -26,6 +26,8 @@ public class MainGame {
 
     private static int score;
 
+    private static Graphics windowBackground;
+
 
     public static void start() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         game = new JFrame();
@@ -177,9 +179,21 @@ public class MainGame {
         gw = new GraphicsWindow(p);
         gw.setPreferredSize(new Dimension(470,470));
 
-        JPanel info = new JPanel();
+
+        class InfoPanel extends JPanel{
+            public void paintComponent(Graphics g){
+                g.drawImage(Resource.DEFAULT_MENU_BACKGROUND, 0, 0, null);
+            }
+        }
+
+        InfoPanel info = new InfoPanel();
         info.setPreferredSize(new Dimension(160,470));
         info.setLayout(null);
+        //info.setBackground(new Color(0, 0, 0, 0));
+
+
+        game.repaint();
+        windowBackground = game.getGraphics();
 
         game.add(gw);
         game.add(info); //will add scoring n stuff here
@@ -189,7 +203,8 @@ public class MainGame {
 
         p.addSprite(plr);
 
-        Graphics windowBackground = game.getGraphics();
+
+
 
         time = 0;
         //Clip c1 = playMusic("res/Zun1.wav");
@@ -200,7 +215,11 @@ public class MainGame {
             @Override
             public void run() {
                 //Stage1(info);
-                Stage1Boss(info);
+                try {
+                    Stage1Boss(info);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
         };
@@ -224,6 +243,7 @@ public class MainGame {
                 throw new RuntimeException(e);
             }
             gw.repaint();
+
             time++;
             double current = System.currentTimeMillis();
             double difference = current-lastTime;
@@ -237,10 +257,11 @@ public class MainGame {
             }
         }
     }
-    public static void Stage1Boss(JPanel info){
+    public static void Stage1Boss(JPanel info) throws IOException {
         double lastTime = System.currentTimeMillis();
         Ethan ethan = new Ethan();
         p.addSprite(ethan);
+        game.setBackground(Color.red);
         while(p.getSpriteArray().contains(ethan)){
             try {
                 p.updatePhysics();
@@ -251,6 +272,7 @@ public class MainGame {
             } catch (LineUnavailableException e) {
                 throw new RuntimeException(e);
             }
+
             gw.repaint();
             time++;
             double current = System.currentTimeMillis();
@@ -267,20 +289,29 @@ public class MainGame {
     }
 
     public static void updateInfoPanel(double difference, JPanel info){
+
         info.removeAll();
+
         JLabel fps = new JLabel("fps  " + (int)(1/difference));
         fps.setBounds(120, 450, 40, 20);
-        info.add(fps);
+        fps.setForeground(Color.RED);
+
         JLabel power = new JLabel("Power: " + numPower);
         power.setBounds(20, 200, 140, 20);
-        info.add(power);
+        power.setForeground(Color.RED);
+
 
         JLabel lives = new JLabel("Lives: ");
         for(int i = 1; i< numOfLives; i++){
             lives.setText(lives.getText() + "*");
         }
         lives.setBounds(20, 220, 140, 20);
+        lives.setForeground(Color.RED);
+
         info.add(lives);
+        info.add(fps);
+        info.add(power);
+
         info.repaint();
     }
     public static Clip playMusic(String fileName) throws LineUnavailableException, UnsupportedAudioFileException, IOException {

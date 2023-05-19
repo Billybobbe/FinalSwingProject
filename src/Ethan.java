@@ -7,9 +7,9 @@ import java.util.TimerTask;
 
 public class Ethan extends Boss{
 
-    public Ethan() {
+    public Ethan() throws IOException {
         super(Resource.ETHAN_IDLE, 200, -10, 60, 70, 0, 1, 1000, 2,
-                1000, 2, 1000, 2, 1000, 2, 1000, 2);
+                1000, 2, 1000, 2, 1000, 2, 1000, 2, Resource.ethanAnimLeft, Resource.ethanAnimLeft);
     }
 
     @Override
@@ -90,8 +90,8 @@ public class Ethan extends Boss{
 
     public void attack(int numOfPj, int speed) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         PhysicsAlt p = MainGame.returnGamePhysics();
-        double x = getX();
-        double y = getY();
+        double x = getX()+getWidth()/4.0;
+        double y = getY()+getHeight()/4.0;
         for(int i = 0; i < numOfPj; i++){
             double speedX = Math.cos(2*Math.PI*i/numOfPj);
             double speedY = Math.sin(2*Math.PI*i/numOfPj);
