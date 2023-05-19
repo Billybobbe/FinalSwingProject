@@ -111,6 +111,15 @@ public class Resource{
             throw new RuntimeException(e);
         }
     }
+    public static final Image ETHAN_IDLE;
+
+    static {
+        try {
+            ETHAN_IDLE = ImageIO.read(new File("res/ethanIdle.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static Image[] playerAnimLeft;
     public static Image[] playerAnimRight;

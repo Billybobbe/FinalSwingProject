@@ -195,41 +195,75 @@ public class MainGame {
         //Clip c1 = playMusic("res/Zun1.wav");
 
         java.util.Timer level1timer = new java.util.Timer();
+
         TimerTask level1 = new TimerTask() {
-            double lastTime = System.currentTimeMillis();
             @Override
             public void run() {
-                while(time/60.0/60<=1){
-                    spawnEnemies(0.01, 10);
-                    try {
-                        p.updatePhysics();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (UnsupportedAudioFileException e) {
-                        throw new RuntimeException(e);
-                    } catch (LineUnavailableException e) {
-                        throw new RuntimeException(e);
-                    }
-                    gw.repaint();
-                    time++;
-                    double current = System.currentTimeMillis();
-                    double difference = current-lastTime;
-                    difference = difference*0.001;
-                    updateInfoPanel(difference, info);
-                    lastTime = current;
-                    try {
-                        Thread.sleep((long)16.666666);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+                //Stage1(info);
+                Stage1Boss(info);
+
             }
         };
-        level1timer.scheduleAtFixedRate(level1, (long)1, (long)16.666666);
+        level1timer.scheduleAtFixedRate(level1, (long)1, 1);
 
 
 
 
+    }
+    public static void Stage1(JPanel info){
+        double lastTime = System.currentTimeMillis();
+        while(time/60.0/60<=1){
+            spawnEnemies(0.01, 10);
+            try {
+                p.updatePhysics();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (UnsupportedAudioFileException e) {
+                throw new RuntimeException(e);
+            } catch (LineUnavailableException e) {
+                throw new RuntimeException(e);
+            }
+            gw.repaint();
+            time++;
+            double current = System.currentTimeMillis();
+            double difference = current-lastTime;
+            difference = difference*0.001;
+            updateInfoPanel(difference, info);
+            lastTime = current;
+            try {
+                Thread.sleep((long)16.666666);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public static void Stage1Boss(JPanel info){
+        double lastTime = System.currentTimeMillis();
+        Ethan ethan = new Ethan();
+        p.addSprite(ethan);
+        while(p.getSpriteArray().contains(ethan)){
+            try {
+                p.updatePhysics();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (UnsupportedAudioFileException e) {
+                throw new RuntimeException(e);
+            } catch (LineUnavailableException e) {
+                throw new RuntimeException(e);
+            }
+            gw.repaint();
+            time++;
+            double current = System.currentTimeMillis();
+            double difference = current-lastTime;
+            difference = difference*0.001;
+            updateInfoPanel(difference, info);
+            lastTime = current;
+            try {
+                Thread.sleep((long)16.666666);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public static void updateInfoPanel(double difference, JPanel info){

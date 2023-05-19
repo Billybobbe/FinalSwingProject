@@ -69,6 +69,11 @@ public class PhysicsAlt {
                     MainGame.setLives(MainGame.getLives()-1);
                     break;
                 }
+                if(distance<= 12 && sp instanceof Boss){
+                    player.remove();
+                    MainGame.setLives(MainGame.getLives()-1);
+                    break;
+                }
                 if(distance<=30 && sp instanceof PowerItem){
                     MainGame.setNumPower(MainGame.getNumPower()+((PowerItem) sp).returnPower());
                     sp.remove();
@@ -106,6 +111,15 @@ public class PhysicsAlt {
                         }
                     }
                 }
+                if(sp instanceof Boss && sp2 instanceof PlayerProjectile){
+                    double spCenterX = sp.getX() + sp.getWidth()/2.0;
+                    double spCenterY = sp.getY() + sp.getHeight()/2.0;
+                    double distance = Math.sqrt(Math.pow((spCenterX-sp2.getX()),2) + Math.pow((spCenterY-sp2.getY()),2));
+                    if(distance<=12){
+                        MainGame.setScore(MainGame.getScore()+100);
+                        ((Boss) sp).decreaseHealth(((PlayerProjectile) sp2).getDamage());
+                    }
+                }
             }
         }
 
@@ -120,5 +134,8 @@ public class PhysicsAlt {
 
     public void remove(Sprite sp){
         sprites.remove(sp);
+    }
+
+    public void projectileSweep() {
     }
 }
