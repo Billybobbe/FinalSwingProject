@@ -9,7 +9,7 @@ public class Ethan extends Boss{
 
     public Ethan() throws IOException {
         super(Resource.ETHAN_IDLE, 200, -10, 60, 70, 0, 1, 1000, 2,
-                1000, 2, 1000, 2, 1000, 2, 1000, 2, Resource.ethanAnimLeft, Resource.ethanAnimLeft);
+                1000, 2, 1000, 2, 1000, 2, 1000, 2, Resource.ethanAnimRight, Resource.ethanAnimLeft);
     }
 
     @Override

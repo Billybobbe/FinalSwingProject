@@ -124,11 +124,14 @@ public class Resource{
     public static Image[] playerAnimLeft;
     public static Image[] playerAnimRight;
     public static Image[] ethanAnimLeft;
+    public static Image[] ethanAnimRight;
 
     public static void loadAnimations() throws IOException {
         playerAnimLeft = buildArray("res/playerAnimLeft");
         playerAnimRight = buildArray("res/playerAnimRight");
         ethanAnimLeft = buildArray("res/ethanAnimLeft");
+        ethanAnimRight = buildArray("res/ethanAnimRight");
+
 
 
     }

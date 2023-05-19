@@ -94,6 +94,7 @@ public class Boss extends Sprite{
             }
             moving = true;
             if(speedX<0){
+                System.out.println(speedX);
                 anim.setAnimation(100, leftAnim);
             }
             else{
@@ -103,7 +104,6 @@ public class Boss extends Sprite{
         }
         double distance = Math.sqrt(Math.pow(targetX-getX(),2) + Math.pow(targetY-getY(),2));
             if(distance>oldDist){
-                System.out.println(distance);
                 speedY = 0;
                 speedX = 0;
                 moving = false;
