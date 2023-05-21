@@ -17,7 +17,7 @@ public class Player extends Sprite implements KeyListener {
     Animation anim;
     private boolean isShooting = false;
     public Player(GraphicsWindow gw) throws IOException {
-        super(Resource.DEFAULT_PLAYER, 200, 370, 60, 140, 0, 0);
+        super(Resource.DEFAULT_PLAYER, 200, 370, 40, 94, 0, 0);
         gw.addKeyListener(this);
         gw.setFocusable(true);
         gw.requestFocus();

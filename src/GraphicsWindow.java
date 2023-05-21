@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.awt.font.TextLayout;
 import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 
@@ -24,7 +25,10 @@ public class GraphicsWindow extends JPanel{
         }
         if(bar.isActive()){
             g.setColor(bar.getColor());
-            g.fillRect(5, 5, (int)(460*bar.getPercentage()), 4);
+            g.fillRect(5, 5, (int)(410*bar.getPercentage()), 4);
+            g.setColor(Color.WHITE);
+            TextLayout t = new TextLayout("" + bar.getTimeLeft(), new Font(Font.MONOSPACED, Font.BOLD, 30), g.getFontMetrics().getFontRenderContext());
+            t.draw((Graphics2D) g, 420, 30);
         }
     }
 }

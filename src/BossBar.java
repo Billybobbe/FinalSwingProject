@@ -4,6 +4,7 @@ public class BossBar {
     private boolean active;
     private double percentage;
     private Color c;
+    private int timeLeft;
     public BossBar(){
         active = false;
         percentage = 0;
@@ -24,6 +25,12 @@ public class BossBar {
     }
     public void setColor(Color c){
         this.c = c;
+    }
+    public void setTimeLeft(int time){
+        timeLeft = time;
+    }
+    public int getTimeLeft(){
+        return timeLeft;
     }
     public void setActive(boolean b){
         active = b;

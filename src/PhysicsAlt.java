@@ -18,7 +18,7 @@ public class PhysicsAlt {
         this.gameAreaY = gameAreaY;
     }
 
-    public void updatePhysics() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public void updatePhysics() throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
         for (int i = 0; i<sprites.size(); i++) {
             Sprite sp = sprites.get(i);
             double oldX = sp.getX();

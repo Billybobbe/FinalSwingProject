@@ -241,6 +241,8 @@ public class MainGame {
                 throw new RuntimeException(e);
             } catch (LineUnavailableException e) {
                 throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
             gw.repaint();
 
@@ -270,6 +272,8 @@ public class MainGame {
             } catch (UnsupportedAudioFileException e) {
                 throw new RuntimeException(e);
             } catch (LineUnavailableException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 

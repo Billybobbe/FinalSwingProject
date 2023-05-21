@@ -73,51 +73,7 @@ public class Boss extends Sprite{
     }
 
     public void move(){
-        if(!moving) {
-            oldDist = Integer.MAX_VALUE;
-            double randx = Math.random() * 320 + 80;
-            double randy = Math.random() * 100 + 30;
-            double dist = Math.sqrt(Math.pow(randx-getX(),2)+Math.pow(randy-getY(),2));
-            while(!(dist>100 && dist<200)){
-                randx = Math.random() * 320 + 80;
-                randy = Math.random() * 100 + 30;
-                dist = Math.sqrt(Math.pow(randx-getX(),2)+Math.pow(randy-getY(),2));
-            }
-            targetX = randx;
-            targetY = randy;
-            speedX = targetX - getX();
-            speedY = targetY - getY();
-            if (Math.abs(Math.max(speedX, speedY)) > 1) { //so it doesn't move too fast
-                double divisior = (1 / Math.max(Math.abs(speedX), Math.abs(speedY)));
-                speedX *= divisior;
-                speedY *= divisior;
-            }
-            moving = true;
-            if(speedX<0){
-                System.out.println(speedX);
-                anim.setAnimation(100, leftAnim);
-            }
-            else{
-                anim.setAnimation(100, rightAnim);
-            }
-            anim.play();
-        }
-        double distance = Math.sqrt(Math.pow(targetX-getX(),2) + Math.pow(targetY-getY(),2));
-            if(distance>oldDist){
-                speedY = 0;
-                speedX = 0;
-                moving = false;
-                anim.playReverse();
-            }
-            else if(distance<50){
-                double x = 50-distance;
-                double y = 2/(x-40);
-                if(y<1 && y>0){
-                    speedX = y;
-                    speedY = speedY/speedX*y;
-                }
-            }
-            oldDist = distance;
+        move(1);
     }
     public void act() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         runAttackIfNotActive();
@@ -127,7 +83,8 @@ public class Boss extends Sprite{
 
     }
     public void incrementAttackTime(){
-        centralTime -= 1.0/1000/60;
+        centralTime -= 1.0/60;
+        MainGame.returnGraphicsWindow().bar.setTimeLeft((int)centralTime);
         if(centralTime <= 0 || centralHealth <= 0){
             t.cancel();
             t.purge();
@@ -150,13 +107,24 @@ public class Boss extends Sprite{
             }
             targetX = randx;
             targetY = randy;
-            speedX = targetX - getX();
-            speedY = targetY - getY();
-            if (Math.abs(Math.max(speedX, speedY)) > speed) { //so it doesn't move too fast
-                double divisior = (speed / Math.max(Math.abs(speedX), Math.abs(speedY)));
-                speedX *= divisior;
-                speedY *= divisior;
+            double potentialSpeedX = targetX - getX();
+            double potentialSpeedY = targetY - getY();
+            if (Math.abs(Math.max(potentialSpeedX, potentialSpeedY)) > speed) { //so it doesn't move too fast
+                double divisior = (speed / Math.max(Math.abs(potentialSpeedX), Math.abs(potentialSpeedY)));
+                speedX = potentialSpeedX*divisior;
+                speedY = potentialSpeedY*divisior;
             }
+            else{
+                speedX = potentialSpeedX;
+                speedY = potentialSpeedY;
+            }
+            if(speedX<0){
+                anim.setAnimation(200, leftAnim);
+            }
+            else{
+                anim.setAnimation(200, rightAnim);
+            }
+            anim.play();
             moving = true;
         }
         double distance = Math.sqrt(Math.pow(targetX-getX(),2) + Math.pow(targetY-getY(),2));
@@ -164,6 +132,7 @@ public class Boss extends Sprite{
         if(distance>oldDist){
             speedY = 0;
             speedX = 0;
+            anim.playReverse();
             moving = false;
         }
         else if(distance<50){

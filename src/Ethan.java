@@ -8,8 +8,8 @@ import java.util.TimerTask;
 public class Ethan extends Boss{
 
     public Ethan() throws IOException {
-        super(Resource.ETHAN_IDLE, 200, -10, 60, 70, 0, 1, 1000, 2,
-                1000, 2, 1000, 2, 1000, 2, 1000, 2, Resource.ethanAnimRight, Resource.ethanAnimLeft);
+        super(Resource.ETHAN_IDLE, 200, -10, 60, 70, 0, 1, 1000, 40,
+                1000, 30, 1000, 40, 1000, 50, 1000, 70, Resource.ethanAnimRight, Resource.ethanAnimLeft);
     }
 
     @Override
