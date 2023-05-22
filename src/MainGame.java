@@ -217,7 +217,7 @@ public class MainGame {
                 //Stage1(info);
                 try {
                     Stage1Boss(info);
-                } catch (IOException e) {
+                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
                     throw new RuntimeException(e);
                 }
 
@@ -259,7 +259,13 @@ public class MainGame {
             }
         }
     }
-    public static void Stage1Boss(JPanel info) throws IOException {
+    public static void Stage1Boss(JPanel info) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        MessageThing.setMessage("Hey guys, I like to eat Hamburglers.");
+        MessageThing.start();
+        while(MessageThing.isDisplay()){
+            gw.repaint();
+        }
+        Clip c = playMusic("res/Oceans.wav");
         double lastTime = System.currentTimeMillis();
         Ethan ethan = new Ethan();
         p.addSprite(ethan);
@@ -290,6 +296,7 @@ public class MainGame {
                 throw new RuntimeException(e);
             }
         }
+        c.close();
     }
 
     public static void updateInfoPanel(double difference, JPanel info){
@@ -357,6 +364,9 @@ public class MainGame {
     }
     public static void setScore(int num){
         score = num;
+    }
+    public void setGameMessage(String message){
+
     }
 
 

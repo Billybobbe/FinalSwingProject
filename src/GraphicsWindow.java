@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
 import java.awt.font.TextLayout;
-import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 
 public class GraphicsWindow extends JPanel{
@@ -10,9 +8,11 @@ public class GraphicsWindow extends JPanel{
 
     public final BossBar bar;
 
+
     public GraphicsWindow(PhysicsAlt physics){
         this.phys = physics;
         this.bar = new BossBar();
+        MessageThing.setKeyListener(this);
         setBackground(Color.RED);
     }
     public void paintComponent(Graphics g){
@@ -30,5 +30,13 @@ public class GraphicsWindow extends JPanel{
             TextLayout t = new TextLayout("" + bar.getTimeLeft(), new Font(Font.MONOSPACED, Font.BOLD, 30), g.getFontMetrics().getFontRenderContext());
             t.draw((Graphics2D) g, 420, 30);
         }
+        if(MessageThing.isDisplay()){
+            g.setColor(new Color(0, 0, 0, 130));
+            g.fillRect(0, (int)MessageThing.getY(), 480, 200);
+            g.setColor(Color.WHITE);
+            TextLayout t = new TextLayout(MessageThing.getMessage(), new Font(Font.MONOSPACED, Font.ITALIC, 20), g.getFontMetrics().getFontRenderContext());
+            t.draw((Graphics2D) g, 10, (int)(MessageThing.getY())+50);
+        }
+
     }
 }

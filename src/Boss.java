@@ -51,6 +51,7 @@ public class Boss extends Sprite{
         anim = new Animation(this);
         this.rightAnim = rightAnim;
         this.leftAnim = leftAnim;
+        MainGame.returnGraphicsWindow().bar.setActive(true);
     }
 
 
@@ -75,38 +76,50 @@ public class Boss extends Sprite{
     public void move(){
         move(1);
     }
+    public void move(int speed){
+        move(speed, -1, -1);
+    }
     public void act() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         runAttackIfNotActive();
         incrementAttackTime();
-        MainGame.returnGraphicsWindow().bar.setPercentage(centralHealth/1000);
-        MainGame.returnGraphicsWindow().bar.setActive(true);
+
 
     }
     public void incrementAttackTime(){
-        centralTime -= 1.0/60;
-        MainGame.returnGraphicsWindow().bar.setTimeLeft((int)centralTime);
+        if(isRunning){
+            centralTime -= 1.0/60;
+            MainGame.returnGraphicsWindow().bar.setTimeLeft((int)centralTime);
+            MainGame.returnGraphicsWindow().bar.setPercentage(centralHealth/1000);
+        }
         if(centralTime <= 0 || centralHealth <= 0){
-            t.cancel();
-            t.purge();
-            moving = false;
-            speedY = 0;
-            speedX = 0;
-            isRunning = false;
+            if(isRunning){
+                t.cancel();
+                t.purge();
+                isRunning = false;
+                MainGame.returnGamePhysics().projectileSweep();
+            }
+            MainGame.returnGraphicsWindow().bar.setPercentage(MainGame.returnGraphicsWindow().bar.getPercentage()+0.01);
         }
     }
-    public void move(double speed){
+    public void move(double speed, double tarX, double tarY){
         if(!moving) {
             oldDist = Integer.MAX_VALUE;
-            double randx = Math.random() * 320 + 80;
-            double randy = Math.random() * 100 + 30;
-            double dist = Math.sqrt(Math.pow(randx-getX(),2)+Math.pow(randy-getY(),2));
-            while(!(dist>100 && dist<200)){
-                randx = Math.random() * 320 + 80;
-                randy = Math.random() * 100 + 30;
-                dist = Math.sqrt(Math.pow(randx-getX(),2)+Math.pow(randy-getY(),2));
+            if(tarX == -1){
+                double randx = Math.random() * 320 + 80;
+                double randy = Math.random() * 100 + 30;
+                double dist = Math.sqrt(Math.pow(randx-getX(),2)+Math.pow(randy-getY(),2));
+                while(!(dist>100 && dist<200)){
+                    randx = Math.random() * 320 + 80;
+                    randy = Math.random() * 100 + 30;
+                    dist = Math.sqrt(Math.pow(randx-getX(),2)+Math.pow(randy-getY(),2));
+                }
+                targetX = randx;
+                targetY = randy;
             }
-            targetX = randx;
-            targetY = randy;
+            else{
+                targetX = tarX;
+                targetY = tarY;
+            }
             double potentialSpeedX = targetX - getX();
             double potentialSpeedY = targetY - getY();
             if (Math.abs(Math.max(potentialSpeedX, potentialSpeedY)) > speed) { //so it doesn't move too fast
@@ -146,9 +159,9 @@ public class Boss extends Sprite{
         oldDist = distance;
     }
 
+
     public void runAttackIfNotActive() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        if(!isRunning) {
-            MainGame.returnGamePhysics().projectileSweep();
+        if(!isRunning && MainGame.returnGraphicsWindow().bar.getPercentage() >= 0.99) {
             if (attackStatus == 0) {
                 isRunning = true;
                 t = attack1();
@@ -188,5 +201,11 @@ public class Boss extends Sprite{
     }
     public void decreaseHealth(int num){
         centralHealth = centralHealth - num;
+    }
+
+    @Override
+    public void remove(){
+        MainGame.returnGraphicsWindow().bar.setActive(false);
+        MainGame.returnGamePhysics().remove(this);
     }
 }

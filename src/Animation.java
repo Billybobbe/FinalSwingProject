@@ -24,37 +24,42 @@ public class Animation {
     public void play(){
         t.cancel();
         t.purge();
-        t = new Timer();
-        double waitPerImage = time/frames.length;
-        TimerTask tt = new TimerTask() {
-            int starttime = 0;
-            @Override
-            public void run() {
-                sp.setImage(frames[starttime]);
-                starttime++;
-                if(starttime>=time/waitPerImage){
-                    t.cancel();
+        if(frames != null){
+            t = new Timer();
+            double waitPerImage = time/frames.length;
+            TimerTask tt = new TimerTask() {
+                int starttime = 0;
+                @Override
+                public void run() {
+                    sp.setImage(frames[starttime]);
+                    starttime++;
+                    if(starttime>=time/waitPerImage){
+                        t.cancel();
+                    }
                 }
-            }
-        };
-        t.schedule(tt, 0L, (long) waitPerImage);
+            };
+            t.schedule(tt, 0L, (long) waitPerImage);
+        }
     }
-    public void playReverse(){
+    public void playReverse() {
         t.cancel();
         t.purge();
-        t = new Timer();
-        double waitPerImage = time/frames.length;
-        TimerTask tt = new TimerTask() {
-            int starttime = 0;
-            @Override
-            public void run() {
-                sp.setImage(frames[frames.length-starttime-1]);
-                starttime++;
-                if(starttime>=time/waitPerImage){
-                    t.cancel();
+        if (frames != null) {
+            t = new Timer();
+            double waitPerImage = time / frames.length;
+            TimerTask tt = new TimerTask() {
+                int starttime = 0;
+
+                @Override
+                public void run() {
+                    sp.setImage(frames[frames.length - starttime - 1]);
+                    starttime++;
+                    if (starttime >= time / waitPerImage) {
+                        t.cancel();
+                    }
                 }
-            }
-        };
-        t.schedule(tt, 0L, (long) waitPerImage);
+            };
+            t.schedule(tt, 0L, (long) waitPerImage);
+        }
     }
 }

@@ -74,14 +74,10 @@ public class PhysicsAlt {
                     MainGame.setLives(MainGame.getLives()-1);
                     break;
                 }
-                if(distance<=30 && sp instanceof PowerItem){
-                    MainGame.setNumPower(MainGame.getNumPower()+((PowerItem) sp).returnPower());
+
+                if(distance<=30 && (sp instanceof ScoreItem || sp instanceof PowerItem || sp instanceof ScoreClingItem)){
                     sp.remove();
                     i--;
-                }
-                if(distance<=30 && sp instanceof ScoreItem){
-                    MainGame.setScore(MainGame.getScore()+1000);
-                    sp.remove();
                 }
             }
         }
@@ -137,5 +133,17 @@ public class PhysicsAlt {
     }
 
     public void projectileSweep() {
+        Player p = null;
+        for(Sprite sp : sprites){
+            if (sp instanceof Player){
+                p = (Player)sp;
+            }
+        }
+        for(int i = 0; i < sprites.size(); i++){
+            Sprite sp = sprites.get(i);
+            if(sp instanceof Projectile && !(sp instanceof PlayerProjectile)){
+                sprites.set(i, new ScoreClingItem(sp.getX(), sp.getY(), p));
+            }
+        }
     }
 }

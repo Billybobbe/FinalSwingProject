@@ -120,17 +120,28 @@ public class Resource{
             throw new RuntimeException(e);
         }
     }
+    public static final Image SCORE_CLING;
+
+    static {
+        try {
+            SCORE_CLING = ImageIO.read(new File("res/scoreCling.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static Image[] playerAnimLeft;
     public static Image[] playerAnimRight;
     public static Image[] ethanAnimLeft;
     public static Image[] ethanAnimRight;
+    public static Image[] ethanAttackAnim;
 
     public static void loadAnimations() throws IOException {
         playerAnimLeft = buildArray("res/playerAnimLeft");
         playerAnimRight = buildArray("res/playerAnimRight");
         ethanAnimLeft = buildArray("res/ethanAnimLeft");
         ethanAnimRight = buildArray("res/ethanAnimRight");
+        ethanAttackAnim = buildArray("res/ethanAttackAnim");
 
 
 

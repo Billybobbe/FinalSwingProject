@@ -6,10 +6,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Ethan extends Boss{
+    private Animation anim;
 
     public Ethan() throws IOException {
-        super(Resource.ETHAN_IDLE, 200, -10, 60, 70, 0, 1, 1000, 40,
+        super(Resource.ETHAN_IDLE, 200, -100, 60, 70, 0, 1, 1000, 40,
                 1000, 30, 1000, 40, 1000, 50, 1000, 70, Resource.ethanAnimRight, Resource.ethanAnimLeft);
+        anim = new Animation(this);
+        anim.setAnimation(100, Resource.ethanAttackAnim);
     }
 
     @Override
@@ -49,16 +52,19 @@ public class Ethan extends Boss{
                 }
             }
         };
-        t.scheduleAtFixedRate(tt, 0, (long)16.6666);
+        t.scheduleAtFixedRate(tt, 0, 1);
         return t;
     }
     public void attack1Cycle() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
-        System.out.println("test");
+        anim.play();
+        Thread.sleep(100);
         attack(10, 5);
         Thread.sleep(500);
         attack(10, 5);
         Thread.sleep(1000);
         attack(25, 1);
+        anim.playReverse();
+        Thread.sleep(300);
         move();
         System.out.println(moving);
         while(moving){

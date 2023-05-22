@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.TimerTask;
 
 public class Player extends Sprite implements KeyListener {
-    private final double speed = 3;
+    private final double speed = 4;
     private int power = 0;
     Animation anim;
     private boolean isShooting = false;
