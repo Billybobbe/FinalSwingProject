@@ -129,6 +129,33 @@ public class Resource{
             throw new RuntimeException(e);
         }
     }
+    public static final Image PHONE_COMBINED;
+
+    static {
+        try {
+            PHONE_COMBINED = ImageIO.read(new File("res/phoneCombined.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static final Image PHONE;
+
+    static {
+        try {
+            PHONE = ImageIO.read(new File("res/phone.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static final Image PHONE_CASE;
+
+    static {
+        try {
+            PHONE_CASE = ImageIO.read(new File("res/phoneCase.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static Image[] playerAnimLeft;
     public static Image[] playerAnimRight;

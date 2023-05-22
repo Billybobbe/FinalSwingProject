@@ -1,6 +1,5 @@
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import java.awt.*;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,6 +46,23 @@ public class Ethan extends Boss{
             public void run() {
                 try {
                     attack2Cycle();
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        t.scheduleAtFixedRate(tt, 0, 1);
+        return t;
+    }
+    public Timer attack3(){
+        Timer t = new Timer();
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    attack3Cycle();
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -74,6 +90,17 @@ public class Ethan extends Boss{
         Thread.sleep(1000);
     }
     public void attack2Cycle() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
+        Thread.sleep(1000);
+        anim.play();
+        phoneAttack(200, 2);
+        anim.playReverse();
+        Thread.sleep(200);
+        move();
+        while (moving){
+            move(5);
+        }
+    }
+    public void attack3Cycle() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         move(5);
         while(moving){
             move(5);
@@ -104,6 +131,18 @@ public class Ethan extends Boss{
             Projectile pj = new Projectile(Resource.PROJECTILE_1, x, y, 20, 20, speedX*speed, speedY*speed);
             MainGame.playMusic("res/projectileSound.wav");
             p.addSprite(pj);
+        }
+    }
+    public void phoneAttack(int delay, int stage) throws InterruptedException, UnsupportedAudioFileException, LineUnavailableException, IOException {
+        int rand = (int)(Math.random()*30) + 15;
+        for(int i = 0; i<rand; i++){
+            double x = Math.random()*50-25;
+            if(stage()!=stage){
+                break;
+            }
+            PhoneProjectile p = new PhoneProjectile(getX()+ x, getY()-10, x/12, 1, 1);
+            MainGame.returnGamePhysics().addSprite(p);
+            Thread.sleep(delay);
         }
     }
 }
