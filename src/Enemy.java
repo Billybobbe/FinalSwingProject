@@ -126,17 +126,16 @@ public class Enemy extends Sprite {
             }
 
         }
-
         phys.remove(this);
     }
     public void dropS(){
         MainGame.returnGamePhysics().addSprite(new ScoreItem(getX(), getY()));
     }
     public void dropBP(){
-        MainGame.returnGamePhysics().addSprite(new PowerItem(getX(), getY(), 20, 20, 10));
+        MainGame.returnGamePhysics().addSprite(new PowerItem(getX(), getY(), 20, 20, 30));
     }
     public void dropP(){
-        MainGame.returnGamePhysics().addSprite(new PowerItem(getX(), getY(), 1));
+        MainGame.returnGamePhysics().addSprite(new PowerItem(getX(), getY(), 10));
     }
 
     public void setHealth(int health){

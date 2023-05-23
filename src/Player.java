@@ -13,9 +13,19 @@ import java.util.TimerTask;
 
 public class Player extends Sprite implements KeyListener {
     private final double speed = 4;
-    private int power = 0;
+    private double tempSpeed = speed;
     Animation anim;
     private boolean isShooting = false;
+
+    private double respawnTime = 0;
+    public Player(double respawnTimeInSeconds, GraphicsWindow gw) throws IOException {
+        super(Resource.DEFAULT_PLAYER, 200, 370, 40, 94, 0, 0);
+        gw.addKeyListener(this);
+        gw.setFocusable(true);
+        gw.requestFocus();
+        this.anim = new Animation(this);
+        this.respawnTime = respawnTimeInSeconds;
+    }
     public Player(GraphicsWindow gw) throws IOException {
         super(Resource.DEFAULT_PLAYER, 200, 370, 40, 94, 0, 0);
         gw.addKeyListener(this);
@@ -30,6 +40,9 @@ public class Player extends Sprite implements KeyListener {
 
     @Override
     public void act() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        if(respawnTime>0){
+            respawnTime -= 1/60.0;
+        }
         if(isShooting){
             if(MainGame.getTime() % 5 == 0)
                 shoot();
@@ -38,12 +51,13 @@ public class Player extends Sprite implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        System.out.println(e.getKeyCode());
         if(e.getKeyCode() == 37){
             if(speedX == 0){
                 anim.setAnimation(100, Resource.playerAnimLeft);
                 anim.play();
             }
-            speedX = -speed;
+            speedX = -tempSpeed;
 
         }
         if(e.getKeyCode() == 39){
@@ -51,17 +65,26 @@ public class Player extends Sprite implements KeyListener {
                 anim.setAnimation(100, Resource.playerAnimRight);
                 anim.play();
             }
-            speedX = speed;
+            speedX = tempSpeed;
 
         }
         if(e.getKeyCode() == 38){
-            speedY = -speed;
+            speedY = -tempSpeed;
         }
         if(e.getKeyCode() == 40){
-            speedY = speed;
+            speedY = tempSpeed;
         }
         if(e.getKeyCode() == 90){
             isShooting = true;
+        }
+        if(e.getKeyCode() == 16){
+            tempSpeed = speed/3;
+            if(speedX<0){
+                speedX = -tempSpeed;
+            }
+            if(speedX>0){
+                speedX = tempSpeed;
+            }
         }
     }
 
@@ -83,42 +106,54 @@ public class Player extends Sprite implements KeyListener {
         if(e.getKeyCode()==90){
             isShooting = false;
         }
+        if(e.getKeyCode() == 16){
+            tempSpeed = speed;
+            if(speedX<0){
+                speedX = -tempSpeed;
+            }
+            if(speedX>0){
+                speedX = tempSpeed;
+            }
+        }
+
 
     }
 
     @Override
     public void remove(){
-        java.util.Timer t = new java.util.Timer();
-        TimerTask tt = new TimerTask() {
-            int startTime = 0;
-            @Override
-            public void run() {
-                MainGame.returnGamePhysics().addSprite(new EnemyDeathEffect(Resource.DEFAULT_ENEMY_DEATH, getX()+getWidth()/4.0, getY()+getHeight()/4.0, 0, 0, 0, 0));
-                startTime++;
-                if(startTime>=6){
-                    t.cancel();
+        if(respawnTime<=0){
+            java.util.Timer t = new java.util.Timer();
+            TimerTask tt = new TimerTask() {
+                int startTime = 0;
+                @Override
+                public void run() {
+                    MainGame.returnGamePhysics().addSprite(new EnemyDeathEffect(Resource.DEFAULT_ENEMY_DEATH, getX()+getWidth()/4.0, getY()+getHeight()/4.0, 0, 0, 0, 0));
+                    startTime++;
+                    if(startTime>=6){
+                        t.cancel();
+                    }
                 }
-            }
-        };
-        t.schedule(tt, (long)0, (long)16.666);
+            };
+            t.schedule(tt, (long)0, (long)16.666);
 
-        java.util.Timer t2 = new java.util.Timer();
-        TimerTask tt2 = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    MainGame.returnGamePhysics().addSprite(new Player(MainGame.returnGraphicsWindow()));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+            java.util.Timer t2 = new java.util.Timer();
+            TimerTask tt2 = new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        MainGame.returnGamePhysics().addSprite(new Player(3, MainGame.returnGraphicsWindow()));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-            }
-        };
-        t2.schedule(tt2, 1000);
-        MainGame.returnGamePhysics().remove(this);
+            };
+            t2.schedule(tt2, 1000);
+            MainGame.returnGamePhysics().remove(this);
+        }
     }
 
     public void shoot() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/4.0, getY()+10, 10, 10, 0, -10, 10));
-        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/2.0, getY()+10, 10, 10, 0, -10, 10));
+        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/4.0, getY()+10, 10, 10, 0, -10, (MainGame.getNumPower()/127)*5+5));
+        MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/2.0, getY()+10, 10, 10, 0, -10, (MainGame.getNumPower()/127)*5+5));
     }
 }

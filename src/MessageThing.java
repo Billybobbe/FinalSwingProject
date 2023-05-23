@@ -12,6 +12,7 @@ public class MessageThing {
     private static Timer t;
 
     public static void setKeyListener(GraphicsWindow g){
+        t = new Timer();
         g.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {

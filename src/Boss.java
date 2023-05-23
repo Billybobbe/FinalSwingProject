@@ -7,7 +7,7 @@ import java.util.Timer;
 public class Boss extends Sprite{
     protected boolean moving = false;
     private boolean attack;
-    private int attackStatus;
+    private int attackStatus = 4;
     private double centralTime;
     private double centralHealth;
     private int attack1Health;
@@ -52,6 +52,7 @@ public class Boss extends Sprite{
         this.rightAnim = rightAnim;
         this.leftAnim = leftAnim;
         MainGame.returnGraphicsWindow().bar.setActive(true);
+        MainGame.returnGamePhysics().projectileSweep();
     }
 
 
@@ -79,13 +80,13 @@ public class Boss extends Sprite{
     public void move(int speed){
         move(speed, -1, -1);
     }
-    public void act() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public void act() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         runAttackIfNotActive();
         incrementAttackTime();
 
 
     }
-    public void incrementAttackTime(){
+    public void incrementAttackTime() throws InterruptedException {
         if(isRunning){
             centralTime -= 1.0/60;
             MainGame.returnGraphicsWindow().bar.setTimeLeft((int)centralTime);
@@ -141,7 +142,7 @@ public class Boss extends Sprite{
             moving = true;
         }
         double distance = Math.sqrt(Math.pow(targetX-getX(),2) + Math.pow(targetY-getY(),2));
-        System.out.println(speedX + " " + speedY + " " + distance);
+        //System.out.println(speedX + " " + speedY + " " + distance);
         if(distance>oldDist){
             speedY = 0;
             speedX = 0;
@@ -188,7 +189,7 @@ public class Boss extends Sprite{
             }
             if (attackStatus == 4) {
                 isRunning = true;
-                attack5();
+                t = attack5();
                 centralHealth = attack5Health;
                 centralTime = attack5Time;
             }

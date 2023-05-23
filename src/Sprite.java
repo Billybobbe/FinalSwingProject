@@ -58,7 +58,7 @@ public class Sprite {
         this.y = y;
     }
 
-    public void act() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public void act() throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
     }
     public void setWidth(int width){
         this.width = width;

@@ -21,27 +21,29 @@ public class PhysicsAlt {
     public void updatePhysics() throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
         for (int i = 0; i<sprites.size(); i++) {
             Sprite sp = sprites.get(i);
-            double oldX = sp.getX();
-            double oldY = sp.getY();
-            sp.updatePosition();
-            sp.act();
-            if(sp instanceof Player && (sp.getX() < minXPlayerBound || sp.getX() > maxXPlayerBound || sp.getY() < minYPlayerBound || sp.getY() > maxYPlayerBound)){
-                double newX = sp.getX();
-                double newY = sp.getY();
-                if((newX < maxXPlayerBound && newX >= minXPlayerBound)){
-                    sp.setY(oldY);
+            if(sp!=null){
+                double oldX = sp.getX();
+                double oldY = sp.getY();
+                sp.updatePosition();
+                sp.act();
+                if(sp instanceof Player && (sp.getX() < minXPlayerBound || sp.getX() > maxXPlayerBound || sp.getY() < minYPlayerBound || sp.getY() > maxYPlayerBound)){
+                    double newX = sp.getX();
+                    double newY = sp.getY();
+                    if((newX < maxXPlayerBound && newX >= minXPlayerBound)){
+                        sp.setY(oldY);
+                    }
+                    else if((newY < maxYPlayerBound && newY >= minYPlayerBound)){
+                        sp.setX(oldX);
+                    }
+                    else{
+                        sp.setX(oldX);
+                        sp.setY(oldY);
+                    }
                 }
-                else if((newY < maxYPlayerBound && newY >= minYPlayerBound)){
-                    sp.setX(oldX);
+                else if(sp.getX()<-100 || sp.getX()>=gameAreaX+100 || sp.getY()<-100 || sp.getX()>=gameAreaY+100){
+                    sprites.remove(sp);
+                    i--;
                 }
-                else{
-                    sp.setX(oldX);
-                    sp.setY(oldY);
-                }
-            }
-            else if(sp.getX()<-100 || sp.getX()>=gameAreaX+100 || sp.getY()<-100 || sp.getX()>=gameAreaY+100){
-                sprites.remove(sp);
-                i--;
             }
         }
 
@@ -63,21 +65,30 @@ public class PhysicsAlt {
 
             for(int i = 0; i<sprites.size(); i++){
                 Sprite sp = sprites.get(i);
-                double distance = Math.sqrt(Math.pow((playerCenterX-sp.getX()),2) + Math.pow((playerCenterY-sp.getY()),2));
-                if(distance<=12 && (sp instanceof Projectile || sp instanceof Enemy)){
-                    player.remove();
-                    MainGame.setLives(MainGame.getLives()-1);
-                    break;
-                }
-                if(distance<= 12 && sp instanceof Boss){
-                    player.remove();
-                    MainGame.setLives(MainGame.getLives()-1);
-                    break;
-                }
+                if(sp!= null){
+                    double distance = Math.sqrt(Math.pow((playerCenterX-(sp.getX()+sp.getWidth()/2.0)),2) + Math.pow((playerCenterY-(sp.getY()+sp.getHeight()/2.0)),2));
+                    if(distance<=9 && (sp instanceof Projectile || sp instanceof Enemy)){
+                        player.remove();
+                        MainGame.setLives(MainGame.getLives()-1);
+                        break;
+                    }
+                    if(distance<= 2 && sp instanceof Boss){
+                        player.remove();
+                        MainGame.setLives(MainGame.getLives()-1);
+                        break;
+                    }
 
-                if(distance<=30 && (sp instanceof ScoreItem || sp instanceof PowerItem || sp instanceof ScoreClingItem)){
-                    sp.remove();
-                    i--;
+                    if(distance<=30 && (sp instanceof ScoreItem || sp instanceof PowerItem || sp instanceof ScoreClingItem)){
+                        if(sp instanceof PowerItem){
+                            int power = ((PowerItem)sp).returnPower();
+                            MainGame.setNumPower(MainGame.getNumPower()+power);
+                            if(MainGame.getNumPower()>126){
+                                MainGame.setNumPower(126);
+                            }
+                        }
+                        sp.remove();
+                        i--;
+                    }
                 }
             }
         }
@@ -97,12 +108,20 @@ public class PhysicsAlt {
                             sp.remove();
                             sp2.remove();
                             if(i<r){
-                                i-=1;
-                                r-=2;
+                                if(i>0){
+                                    i-=1;
+                                }
+                                if(r>1){
+                                    r-=2;
+                                }
                             }
                             else{
-                                i-=2;
-                                r-=1;
+                                if(i>1){
+                                    i-=2;
+                                }
+                                if (r > 0) {
+                                    r-=1;
+                                }
                             }
                         }
                     }
@@ -114,6 +133,10 @@ public class PhysicsAlt {
                     if(distance<=12){
                         MainGame.setScore(MainGame.getScore()+100);
                         ((Boss) sp).decreaseHealth(((PlayerProjectile) sp2).getDamage());
+                        sp2.remove();
+                        if(i>0){
+                            i--;
+                        }
                     }
                 }
             }
@@ -141,7 +164,7 @@ public class PhysicsAlt {
         }
         for(int i = 0; i < sprites.size(); i++){
             Sprite sp = sprites.get(i);
-            if(sp instanceof Projectile && !(sp instanceof PlayerProjectile)){
+            if((sp instanceof Projectile || sp instanceof Enemy) && !(sp instanceof PlayerProjectile)){
                 sprites.set(i, new ScoreClingItem(sp.getX(), sp.getY(), p));
             }
         }

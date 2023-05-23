@@ -21,7 +21,10 @@ public class GraphicsWindow extends JPanel{
         ArrayList<Sprite> arr = phys.getSpriteArray();
         for(int i = 0; i< arr.size(); i++){
             Sprite sp = arr.get(i);
-            g.drawImage(sp.getimage(), (int)sp.getX() , (int)sp.getY(), sp.getWidth(), sp.getHeight(), null);
+            if(sp!=null){
+                g.drawImage(sp.getimage(), (int)sp.getX() , (int)sp.getY(), sp.getWidth(), sp.getHeight(), null);
+                //g.drawImage(Resource.PROJECTILE_1, (int)(sp.getX()+sp.getWidth()/2.0-1.5), (int)(sp.getY()+sp.getHeight()/2.0-1.5), 6, 6 ,null);
+            }
         }
         if(bar.isActive()){
             g.setColor(bar.getColor());

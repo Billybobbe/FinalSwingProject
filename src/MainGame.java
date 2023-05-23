@@ -29,11 +29,11 @@ public class MainGame {
     private static Graphics windowBackground;
 
 
+
     public static void start() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         game = new JFrame();
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //game.setUndecorated(true);
-        //game.pack();
         game.setSize(640,480);
         game.setResizable(false);
 
@@ -214,16 +214,16 @@ public class MainGame {
         TimerTask level1 = new TimerTask() {
             @Override
             public void run() {
-                //Stage1(info);
+                Stage1(info);
                 try {
                     Stage1Boss(info);
-                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
 
             }
         };
-        level1timer.scheduleAtFixedRate(level1, (long)1, 1);
+        level1timer.schedule(level1, 1);
 
 
 
@@ -231,7 +231,7 @@ public class MainGame {
     }
     public static void Stage1(JPanel info){
         double lastTime = System.currentTimeMillis();
-        while(time/60.0/60<=1){
+        while(time/60.0/60<=0.1){
             spawnEnemies(0.01, 10);
             try {
                 p.updatePhysics();
@@ -259,7 +259,7 @@ public class MainGame {
             }
         }
     }
-    public static void Stage1Boss(JPanel info) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public static void Stage1Boss(JPanel info) throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
         MessageThing.setMessage("Hey guys, I like to eat Hamburglers.");
         MessageThing.start();
         while(MessageThing.isDisplay()){
@@ -297,6 +297,13 @@ public class MainGame {
             }
         }
         c.close();
+        resetStats();
+        startTitle();
+    }
+    public static void resetStats(){
+        numOfLives = 3;
+        score = 0;
+        numPower = 0;
     }
 
     public static void updateInfoPanel(double difference, JPanel info){
@@ -308,16 +315,18 @@ public class MainGame {
         fps.setForeground(Color.RED);
 
         JLabel power = new JLabel("Power: " + numPower);
-        power.setBounds(20, 200, 140, 20);
+        power.setBounds(20, 200, 300, 20);
         power.setForeground(Color.RED);
+        power.setFont(new Font(Font.SANS_SERIF, 0, 20));
 
 
         JLabel lives = new JLabel("Lives: ");
         for(int i = 1; i< numOfLives; i++){
             lives.setText(lives.getText() + "*");
         }
-        lives.setBounds(20, 220, 140, 20);
+        lives.setBounds(20, 220, 300, 20);
         lives.setForeground(Color.RED);
+        lives.setFont(new Font(Font.SANS_SERIF, 0, 20));
 
         info.add(lives);
         info.add(fps);
@@ -364,9 +373,6 @@ public class MainGame {
     }
     public static void setScore(int num){
         score = num;
-    }
-    public void setGameMessage(String message){
-
     }
 
 
