@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Final Swing Project:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Final_Swing_Project_jar</output-path>
+    <root id="archive" name="Final Swing Project.jar">
+      <element id="module-output" name="Final Swing Project" />
+    </root>
+  </artifact>
+</component>

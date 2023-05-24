@@ -51,39 +51,38 @@ public class Player extends Sprite implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
         if(e.getKeyCode() == 37){
-            if(speedX == 0){
+            if(getSpeedX() == 0){
                 anim.setAnimation(100, Resource.playerAnimLeft);
                 anim.play();
             }
-            speedX = -tempSpeed;
+            setSpeedX(-tempSpeed);
 
         }
         if(e.getKeyCode() == 39){
-            if(speedX == 0){
+            if(getSpeedX() == 0){
                 anim.setAnimation(100, Resource.playerAnimRight);
                 anim.play();
             }
-            speedX = tempSpeed;
+            setSpeedX(tempSpeed);
 
         }
         if(e.getKeyCode() == 38){
-            speedY = -tempSpeed;
+            setSpeedY(-tempSpeed);
         }
         if(e.getKeyCode() == 40){
-            speedY = tempSpeed;
+            setSpeedY(tempSpeed);
         }
         if(e.getKeyCode() == 90){
             isShooting = true;
         }
         if(e.getKeyCode() == 16){
             tempSpeed = speed/3;
-            if(speedX<0){
-                speedX = -tempSpeed;
+            if(getSpeedX()<0){
+                setSpeedX(-tempSpeed);
             }
-            if(speedX>0){
-                speedX = tempSpeed;
+            if(getSpeedX()>0){
+                setSpeedX(tempSpeed);
             }
         }
     }
@@ -91,28 +90,28 @@ public class Player extends Sprite implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         if(e.getKeyCode()==37) {
-            speedX = 0;
+            setSpeedX(0);
             anim.setAnimation(100, Resource.playerAnimLeft);
             anim.playReverse();
         }
         if(e.getKeyCode()==39){
             anim.setAnimation(100, Resource.playerAnimRight);
             anim.playReverse();
-            speedX = 0;
+            setSpeedX(0);
         }
         if(e.getKeyCode()==38 || e.getKeyCode()==40){
-            speedY = 0;
+            setSpeedY(0);
         }
         if(e.getKeyCode()==90){
             isShooting = false;
         }
         if(e.getKeyCode() == 16){
             tempSpeed = speed;
-            if(speedX<0){
-                speedX = -tempSpeed;
+            if(getSpeedX()<0){
+                setSpeedX(-tempSpeed);
             }
-            if(speedX>0){
-                speedX = tempSpeed;
+            if(getSpeedX()>0){
+                setSpeedX(tempSpeed);
             }
         }
 

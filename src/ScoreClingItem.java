@@ -18,12 +18,12 @@ public class ScoreClingItem extends Sprite{
             double potentialSpeedY = targetY - getY();
             if (Math.abs(Math.max(potentialSpeedX, potentialSpeedY)) > speed) { //so it doesn't move too fast
                 double divisior = (speed / Math.max(Math.abs(potentialSpeedX), Math.abs(potentialSpeedY)));
-                speedX = potentialSpeedX*divisior;
-                speedY = potentialSpeedY*divisior;
+                setSpeedX(potentialSpeedX*divisior);
+                setSpeedY(potentialSpeedY*divisior);
             }
             else{
-                speedX = potentialSpeedX;
-                speedY = potentialSpeedY;
+                setSpeedX(potentialSpeedX);
+                setSpeedY(potentialSpeedY);
             }
         }
     }

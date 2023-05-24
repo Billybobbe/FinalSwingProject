@@ -223,6 +223,7 @@ public class MainGame {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+
                 try {
                     Stage1Boss(info, level1timer);
                 } catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException e) {
@@ -251,7 +252,7 @@ public class MainGame {
     }
     public static void Stage1(JPanel info, Timer t) throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         double lastTime = System.currentTimeMillis();
-        while(time/60.0/60<=0.1){
+        while(time/60.0/60<=0.15){
             spawnEnemies(0.01, 10);
             try {
                 p.updatePhysics();

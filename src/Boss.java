@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.Timer;
 
 public class Boss extends Sprite{
-    protected boolean moving = false;
+    private boolean moving = false;
     private boolean attack;
-    private int attackStatus = 4;
+    private int attackStatus;
     private double centralTime;
     private double centralHealth;
     private int attack1Health;
@@ -123,16 +123,16 @@ public class Boss extends Sprite{
             }
             double potentialSpeedX = targetX - getX();
             double potentialSpeedY = targetY - getY();
-            if (Math.abs(Math.max(potentialSpeedX, potentialSpeedY)) > speed) { //so it doesn't move too fast
+            if (Math.max(Math.abs(potentialSpeedX), Math.abs(potentialSpeedY)) > speed) { //so it doesn't move too fast
                 double divisior = (speed / Math.max(Math.abs(potentialSpeedX), Math.abs(potentialSpeedY)));
-                speedX = potentialSpeedX*divisior;
-                speedY = potentialSpeedY*divisior;
+                setSpeedX(potentialSpeedX*divisior);
+                setSpeedY(potentialSpeedY*divisior);
             }
             else{
-                speedX = potentialSpeedX;
-                speedY = potentialSpeedY;
+                setSpeedX(potentialSpeedX);
+                setSpeedY(potentialSpeedY);
             }
-            if(speedX<0){
+            if(getSpeedX()<0){
                 anim.setAnimation(200, leftAnim);
             }
             else{
@@ -142,10 +142,9 @@ public class Boss extends Sprite{
             moving = true;
         }
         double distance = Math.sqrt(Math.pow(targetX-getX(),2) + Math.pow(targetY-getY(),2));
-        //System.out.println(speedX + " " + speedY + " " + distance);
-        if(distance>oldDist){
-            speedY = 0;
-            speedX = 0;
+        if(distance>oldDist || getSpeedX() == 0){
+            setSpeedX(0);
+            setSpeedY(0);
             anim.playReverse();
             moving = false;
         }
@@ -153,13 +152,12 @@ public class Boss extends Sprite{
             double x = 50-distance;
             double y = 2/(x-40);
             if(y<1 && y>0){
-                speedX = y;
-                speedY = speedY/speedX*y;
+                setSpeedX(y);
+                setSpeedY(getSpeedY()/getSpeedX()*y);
             }
         }
         oldDist = distance;
     }
-
 
     public void runAttackIfNotActive() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         if(!isRunning && MainGame.returnGraphicsWindow().bar.getPercentage() >= 0.99) {
@@ -214,5 +212,8 @@ public class Boss extends Sprite{
     }
     protected int stage(){
         return attackStatus;
+    }
+    public boolean isMoving(){
+        return moving;
     }
 }

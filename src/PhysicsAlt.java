@@ -7,7 +7,7 @@ public class PhysicsAlt {
     private int minXPlayerBound = 0;
     private int maxXPlayerBound = 439;
     private int minYPlayerBound = -20;
-    private int maxYPlayerBound = 370;
+    private int maxYPlayerBound = 390;
     private int gameAreaX;
     private int gameAreaY;
 
@@ -26,6 +26,7 @@ public class PhysicsAlt {
                 double oldY = sp.getY();
                 sp.updatePosition();
                 sp.act();
+
                 if(sp instanceof Player && (sp.getX() < minXPlayerBound || sp.getX() > maxXPlayerBound || sp.getY() < minYPlayerBound || sp.getY() > maxYPlayerBound)){
                     double newX = sp.getX();
                     double newY = sp.getY();
@@ -39,6 +40,10 @@ public class PhysicsAlt {
                         sp.setX(oldX);
                         sp.setY(oldY);
                     }
+                }
+                if(sp instanceof Boss && (sp.getX()<10 || sp.getX()>gameAreaX-10 || sp.getY()<10 || sp.getY()>gameAreaY-10) && ((Boss)sp).isMoving()){
+                    sp.setSpeedX(0);
+                    sp.setSpeedY(0);
                 }
                 else if(sp.getX()<-100 || sp.getX()>=gameAreaX+100 || sp.getY()<-100 || sp.getX()>=gameAreaY+100){
                     sprites.remove(sp);

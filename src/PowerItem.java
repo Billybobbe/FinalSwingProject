@@ -19,9 +19,9 @@ public class PowerItem extends Sprite{
     @Override
     public void act() throws IOException {
         timeExisting++;
-        this.speedY = -1 + Math.pow(this.timeExisting, 2)/2000;
-        if(speedY>2){
-            speedY = 2;
+        setSpeedY(-1 + Math.pow(this.timeExisting, 2)/2000);
+        if(getSpeedY()>2){
+            setSpeedY(2);
         }
     }
     public int returnPower(){

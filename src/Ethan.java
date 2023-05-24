@@ -116,8 +116,7 @@ public class Ethan extends Boss{
         anim.playReverse();
         Thread.sleep(300);
         move();
-        System.out.println(moving);
-        while(moving){
+        while(isMoving()){
             move();
             Thread.sleep((long)16.66666);
         }
@@ -130,25 +129,25 @@ public class Ethan extends Boss{
         anim.playReverse();
         Thread.sleep(200);
         move();
-        while (moving){
+        while (isMoving()){
             move(5);
         }
     }
     public void attack3Cycle() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         move(5);
-        while(moving){
+        while(isMoving()){
             move(5);
         }
         attack(5, 5);
         Thread.sleep(10);
         move(5);
-        while(moving){
+        while(isMoving()){
             move(5);
         }
         attack(5, 5);
         Thread.sleep(10);
         move(5);
-        while(moving){
+        while(isMoving()){
             move(5);
         }
         attack(5, 5);
@@ -164,11 +163,12 @@ public class Ethan extends Boss{
         attack(30, 3);
         move();
         int i = 0;
-        while(moving){
+        while(isMoving()){
             move();
-            if(i%250000000==0){
+            if(i%10==0){
                 phoneAttack(0, 5, 10, 10);
             }
+            Thread.sleep(100);
             i++;
 
         }

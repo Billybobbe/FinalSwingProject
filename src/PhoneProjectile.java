@@ -16,8 +16,8 @@ public class PhoneProjectile extends Projectile{
     public void act() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         timer++;
         if(timer/60 >= splitTimeInSeconds){
-            Projectile p = new Projectile(Resource.PHONE, getX(), getY(), 15, 20, speedX-(0.5*speedX), speedY);
-            Projectile p1 = new Projectile(Resource.PHONE_CASE, getX(), getY(), 15, 20, speedX+(0.5*speedX), speedY);
+            Projectile p = new Projectile(Resource.PHONE, getX(), getY(), 15, 20, getSpeedX()-(0.5*getSpeedX()), getSpeedY());
+            Projectile p1 = new Projectile(Resource.PHONE_CASE, getX(), getY(), 15, 20, getSpeedX()+(0.5*getSpeedX()), getSpeedY());
             MainGame.returnGamePhysics().addSprite(p);
             MainGame.returnGamePhysics().addSprite(p1);
             remove();

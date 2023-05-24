@@ -12,8 +12,8 @@ public class Sprite {
     private double x;
     private double y;
 
-    protected double speedX;
-    protected double speedY;
+    private double speedX;
+    private double speedY;
 
     public Sprite(Image i, double x, double y, int width, int height, double speedX, double speedY) {
         this.i = i;
@@ -72,6 +72,18 @@ public class Sprite {
 
     public void setImage(Image i){
         this.i = i;
+    }
+    public void setSpeedX(double speedX){
+        this.speedX = speedX;
+    }
+    public void setSpeedY(double speedY){
+        this.speedY = speedY;
+    }
+    public double getSpeedX(){
+        return speedX;
+    }
+    public double getSpeedY(){
+        return speedY;
     }
 }
 
