@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -180,11 +181,7 @@ public class MainGame {
         gw.setPreferredSize(new Dimension(470,470));
 
 
-        class InfoPanel extends JPanel{
-            public void paintComponent(Graphics g){
-                g.drawImage(Resource.DEFAULT_MENU_BACKGROUND, 0, 0, null);
-            }
-        }
+
 
         InfoPanel info = new InfoPanel();
         info.setPreferredSize(new Dimension(160,470));
@@ -310,9 +307,7 @@ public class MainGame {
 
         info.removeAll();
 
-        JLabel fps = new JLabel("fps  " + (int)(1/difference));
-        fps.setBounds(120, 450, 40, 20);
-        fps.setForeground(Color.RED);
+        /**
 
         JLabel power = new JLabel("Power: " + numPower);
         power.setBounds(20, 200, 300, 20);
@@ -329,10 +324,20 @@ public class MainGame {
         lives.setFont(new Font(Font.SANS_SERIF, 0, 20));
 
         info.add(lives);
-        info.add(fps);
+
         info.add(power);
+         **/
+
+        JLabel fps = new JLabel("fps  " + (int)(1/difference));
+        fps.setBounds(120, 450, 40, 20);
+        fps.setForeground(Color.RED);
+        info.add(fps);
 
         info.repaint();
+
+
+
+
     }
     public static Clip playMusic(String fileName) throws LineUnavailableException, UnsupportedAudioFileException, IOException {
         Clip bgm = AudioSystem.getClip();

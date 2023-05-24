@@ -147,11 +147,53 @@ public class Resource{
             throw new RuntimeException(e);
         }
     }
+    public static final Image GAME_WINDOW_BACKGROUND;
+
+    static {
+        try {
+            GAME_WINDOW_BACKGROUND = ImageIO.read(new File("res/leather.jpg"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static final Image PHONE_CASE;
 
     static {
         try {
             PHONE_CASE = ImageIO.read(new File("res/phoneCase.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static final Font INFO_FONT_DETAIL;
+
+    static {
+        try {
+            INFO_FONT_DETAIL = Font.createFont(Font.PLAIN, new File("res/Caveat-Medium.ttf"));
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static final Font INFO_FONT_NUMBER;
+
+    static {
+        try {
+            INFO_FONT_NUMBER = Font.createFont(Font.PLAIN, new File("res/ReggaeOne-Regular.ttf"));
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static final Image HEALTH_HEART;
+
+    static {
+        try {
+            HEALTH_HEART = ImageIO.read(new File("res/HealthHeart.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
