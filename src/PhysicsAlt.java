@@ -69,12 +69,10 @@ public class PhysicsAlt {
                     double distance = Math.sqrt(Math.pow((playerCenterX-(sp.getX()+sp.getWidth()/2.0)),2) + Math.pow((playerCenterY-(sp.getY()+sp.getHeight()/2.0)),2));
                     if(distance<=9 && (sp instanceof Projectile || sp instanceof Enemy)){
                         player.remove();
-                        MainGame.setLives(MainGame.getLives()-1);
                         break;
                     }
                     if(distance<= 2 && sp instanceof Boss){
                         player.remove();
-                        MainGame.setLives(MainGame.getLives()-1);
                         break;
                     }
 

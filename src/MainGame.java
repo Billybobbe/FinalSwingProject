@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainGame {
@@ -211,10 +212,32 @@ public class MainGame {
         TimerTask level1 = new TimerTask() {
             @Override
             public void run() {
-                Stage1(info);
                 try {
-                    Stage1Boss(info);
+                    Stage1(info, level1timer);
+                } catch (UnsupportedAudioFileException e) {
+                    throw new RuntimeException(e);
+                } catch (LineUnavailableException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    Stage1Boss(info, level1timer);
                 } catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                resetStats();
+                try {
+                    startTitle();
+                } catch (UnsupportedAudioFileException e) {
+                    throw new RuntimeException(e);
+                } catch (LineUnavailableException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
 
@@ -226,7 +249,7 @@ public class MainGame {
 
 
     }
-    public static void Stage1(JPanel info){
+    public static void Stage1(JPanel info, Timer t) throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         double lastTime = System.currentTimeMillis();
         while(time/60.0/60<=0.1){
             spawnEnemies(0.01, 10);
@@ -254,9 +277,17 @@ public class MainGame {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            if(getLives()<=0){
+                return;
+            }
         }
     }
-    public static void Stage1Boss(JPanel info) throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
+    public static void Stage1Boss(JPanel info, Timer t) throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
+        if(getLives()<=0){
+            t.cancel();
+            t.purge();
+            return;
+        }
         MessageThing.setMessage("Hey guys, I like to eat Hamburglers.");
         MessageThing.start();
         while(MessageThing.isDisplay()){
@@ -292,10 +323,14 @@ public class MainGame {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            if(getLives()<=0){
+                c.close();
+                ethan.remove();
+                return;
+            }
         }
+        t.cancel();
         c.close();
-        resetStats();
-        startTitle();
     }
     public static void resetStats(){
         numOfLives = 3;

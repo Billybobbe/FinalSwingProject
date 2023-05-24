@@ -149,6 +149,7 @@ public class Player extends Sprite implements KeyListener {
             };
             t2.schedule(tt2, 1000);
             MainGame.returnGamePhysics().remove(this);
+            MainGame.setLives(MainGame.getLives()-1);
         }
     }
 

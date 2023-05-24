@@ -208,6 +208,9 @@ public class Boss extends Sprite{
     public void remove(){
         MainGame.returnGraphicsWindow().bar.setActive(false);
         MainGame.returnGamePhysics().remove(this);
+        t.cancel();
+        t.purge();
+        moving = false;
     }
     protected int stage(){
         return attackStatus;
