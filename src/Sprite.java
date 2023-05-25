@@ -15,6 +15,9 @@ public class Sprite {
     private double speedX;
     private double speedY;
 
+    private double rotation;
+
+    private float transparency;
     public Sprite(Image i, double x, double y, int width, int height, double speedX, double speedY) {
         this.i = i;
         this.width = width;
@@ -23,7 +26,41 @@ public class Sprite {
         this.y = y;
         this.speedX = speedX;
         this.speedY = speedY;
+        this.transparency = 1f;
     }
+    public Sprite(Image i, double x, double y, int width, int height, double speedX, double speedY, double rotation) {
+        this.i = i;
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.rotation = rotation;
+        this.transparency = 1f;
+    }
+    public Sprite(Image i, double x, double y, int width, int height, double speedX, double speedY, float transparency) {
+        this.i = i;
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.transparency = transparency;
+    }
+    public Sprite(Image i, double x, double y, int width, int height, double speedX, double speedY, double rotation, float transparency) {
+        this.i = i;
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.rotation = rotation;
+        this.transparency = transparency;
+    }
+
 
     public int getWidth() {
         return width;
@@ -84,6 +121,18 @@ public class Sprite {
     }
     public double getSpeedY(){
         return speedY;
+    }
+    public void setRotation(double theta){
+        rotation = theta;
+    }
+    public double getRotation(){
+        return rotation;
+    }
+    public float getTransparency(){
+        return transparency;
+    }
+    public void setTransparency(float t){
+        this.transparency = t;
     }
 }
 

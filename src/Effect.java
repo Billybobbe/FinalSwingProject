@@ -23,5 +23,23 @@ public class Effect extends Sprite{
         };
         t.scheduleAtFixedRate(tt, 0, 1);
     }
+    public Effect(Image i, double x, double y, int width, int height, double speedX, double speedY, int duration) {
+        super(i, x, y, width, height, speedX, speedY);
+        sp = this;
+
+        Timer t = new Timer();
+        TimerTask tt = new TimerTask() {
+            int startTime = 0;
+            @Override
+            public void run() {
+                startTime++;
+                if(startTime>=duration){
+                    MainGame.returnGamePhysics().remove(sp);
+                    t.cancel();
+                }
+            }
+        };
+        t.scheduleAtFixedRate(tt, 0, 1);
+    }
 
 }

@@ -19,4 +19,10 @@ public class PlayerProjectile extends Projectile{
         return damage;
     }
 
+    @Override
+    public void remove() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        MainGame.returnGamePhysics().addSprite(new Effect(Resource.ATTACK_PARTICLE, getX(), getY(), 10, 10, 100));
+        super.remove();
+    }
+
 }

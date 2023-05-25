@@ -19,7 +19,7 @@ public class Player extends Sprite implements KeyListener {
 
     private double respawnTime = 0;
     public Player(double respawnTimeInSeconds, GraphicsWindow gw) throws IOException {
-        super(Resource.DEFAULT_PLAYER, 200, 370, 40, 94, 0, 0);
+        super(Resource.DEFAULT_PLAYER, 200, 370, 40, 94, 0, 0, 1);
         gw.addKeyListener(this);
         gw.setFocusable(true);
         gw.requestFocus();
@@ -27,7 +27,7 @@ public class Player extends Sprite implements KeyListener {
         this.respawnTime = respawnTimeInSeconds;
     }
     public Player(GraphicsWindow gw) throws IOException {
-        super(Resource.DEFAULT_PLAYER, 200, 370, 40, 94, 0, 0);
+        super(Resource.DEFAULT_PLAYER, 200, 370, 40, 94, 0, 0, 1);
         gw.addKeyListener(this);
         gw.setFocusable(true);
         gw.requestFocus();
@@ -84,6 +84,9 @@ public class Player extends Sprite implements KeyListener {
             if(getSpeedX()>0){
                 setSpeedX(tempSpeed);
             }
+        }
+        if(e.getKeyCode()==27){
+            MainGame.setLives(0);
         }
     }
 

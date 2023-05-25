@@ -198,6 +198,24 @@ public class Resource{
             throw new RuntimeException(e);
         }
     }
+    public static final Image PARTICLE;
+
+    static {
+        try {
+            PARTICLE = ImageIO.read(new File("res/particle.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static final Image ATTACK_PARTICLE;
+
+    static {
+        try {
+            ATTACK_PARTICLE = ImageIO.read(new File("res/attackparticle.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static Image[] playerAnimLeft;
     public static Image[] playerAnimRight;

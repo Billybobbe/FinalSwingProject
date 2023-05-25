@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 public class GraphicsWindow extends JPanel{
@@ -18,12 +19,19 @@ public class GraphicsWindow extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage(Resource.DEFAULT_BACKGROUND, 0, 0, null);
+        Graphics2D g2D = (Graphics2D)g;
         ArrayList<Sprite> arr = phys.getSpriteArray();
         for(int i = 0; i< arr.size(); i++){
             Sprite sp = arr.get(i);
             if(sp!=null){
-                g.drawImage(sp.getimage(), (int)sp.getX() , (int)sp.getY(), sp.getWidth(), sp.getHeight(), null);
+                AffineTransform a = AffineTransform.getRotateInstance(sp.getRotation(), sp.getX()+sp.getWidth()/2.0, sp.getY()+sp.getHeight()/2.0);
+                AlphaComposite transparency = AlphaComposite.SrcOver;
+                transparency = transparency.derive(sp.getTransparency());
+                g2D.setTransform(a);
+                g2D.setComposite(transparency);
+                g2D.drawImage(sp.getimage(), (int)sp.getX() , (int)sp.getY(), sp.getWidth(), sp.getHeight(), null);
                 //g.drawImage(Resource.PROJECTILE_1, (int)(sp.getX()+sp.getWidth()/2.0-1.5), (int)(sp.getY()+sp.getHeight()/2.0-1.5), 6, 6 ,null);
+                g2D.setComposite(AlphaComposite.Src);
             }
         }
         if(bar.isActive()){
