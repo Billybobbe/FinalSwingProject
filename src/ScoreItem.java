@@ -20,7 +20,7 @@ public class ScoreItem extends Sprite{
     }
     @Override
     public void remove(){
-        MainGame.returnGamePhysics().addSprite(new Effect(Resource.THOUSAND_SCORE, getX(), getY(), 15, 20, 1000));
+        MainGame.returnGamePhysics().addSprite(new Effect(Resource.THOUSAND_SCORE, getX(), getY(), 15, 20, 0, 0, 1000, 1000));
         MainGame.setScore(MainGame.getScore()+1000);
         MainGame.returnGamePhysics().remove(this);
     }

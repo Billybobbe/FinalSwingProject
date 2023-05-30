@@ -21,6 +21,11 @@ public class Animation {
         this.frames = frames;
     }
 
+    public void clear(){
+        t.cancel();
+        t.purge();
+    }
+
     public void play(){
         t.cancel();
         t.purge();

@@ -131,12 +131,12 @@ public class PhysicsAlt {
                 }
                 if(sp instanceof Boss && sp2 instanceof PlayerProjectile){
                     double spCenterX = sp.getX() + sp.getWidth()/2.0;
-                    double spCenterY = sp.getY() + sp.getHeight()/2.0;
+                    double spCenterY = sp.getY() + sp.getHeight()/1.5;
                     double distance = Math.sqrt(Math.pow((spCenterX-sp2.getX()),2) + Math.pow((spCenterY-sp2.getY()),2));
                     if(distance<=12){
                         MainGame.setScore(MainGame.getScore()+100);
                         ((Boss) sp).decreaseHealth(((PlayerProjectile) sp2).getDamage());
-                        sp2.remove();
+                        ((PlayerProjectile) sp2).removeBoss();
                         if(i>0){
                             i--;
                         }

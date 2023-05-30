@@ -40,16 +40,19 @@ public class Ethan extends Boss{
 
     @Override
     public Timer attack2() {
+        SpellCard.set(new Sprite(Resource.ETHAN_IDLE, 0, 0, 100, 100, 0, 0), "Douche Sign \"No case\"");
         Timer t = new Timer();
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
-                try {
-                    attack2Cycle();
-                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                if(!SpellCard.isPlaying()){
+                    try {
+                        attack2Cycle();
+                    } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         };
@@ -57,6 +60,7 @@ public class Ethan extends Boss{
         return t;
     }
     public Timer attack3(){
+        anim.clear();
         Timer t = new Timer();
         TimerTask tt = new TimerTask() {
             @Override
@@ -72,16 +76,19 @@ public class Ethan extends Boss{
         return t;
     }
     public Timer attack4(){
+        SpellCard.set(new Sprite(Resource.ETHAN_IDLE, 0, 0, 100, 100, 0, 0), "Test 2");
         anim.play();
 
         Timer t = new Timer();
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
-                try {
-                    attack4Cycle();
-                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException e) {
-                    throw new RuntimeException(e);
+                if(!SpellCard.isPlaying()){
+                    try {
+                        attack4Cycle();
+                    } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         };
@@ -89,16 +96,19 @@ public class Ethan extends Boss{
         return t;
     }
     public Timer attack5(){
+        SpellCard.set(new Sprite(Resource.ETHAN_IDLE, 0, 0, 100, 100, 0, 0), "Test 3");
         anim.play();
 
         Timer t = new Timer();
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
-                try {
-                    attack5Cycle();
-                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException e) {
-                    throw new RuntimeException(e);
+                if(!SpellCard.isPlaying()){
+                    try {
+                        attack5Cycle();
+                    } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         };
@@ -125,7 +135,7 @@ public class Ethan extends Boss{
     public void attack2Cycle() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         Thread.sleep(1000);
         anim.play();
-        phoneAttack(200, 2, 30, 15);
+        phoneAttack(200, 30, 15);
         anim.playReverse();
         Thread.sleep(200);
         move();
@@ -134,6 +144,7 @@ public class Ethan extends Boss{
         }
     }
     public void attack3Cycle() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
+        Thread.sleep(1000);
         move(5);
         while(isMoving()){
             move(5);
@@ -157,7 +168,7 @@ public class Ethan extends Boss{
         Thread.sleep(1000);
         attack(50, 1);
         Thread.sleep(2000);
-        phoneAttack(3, 4, 50, 30);
+        phoneAttack(3, 50, 30);
     }
     public void attack5Cycle() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         attack(30, 3);
@@ -166,7 +177,7 @@ public class Ethan extends Boss{
         while(isMoving()){
             move();
             if(i%10==0){
-                phoneAttack(0, 5, 10, 10);
+                phoneAttack(0, 10, 10);
             }
             Thread.sleep(100);
             i++;
@@ -176,9 +187,13 @@ public class Ethan extends Boss{
 
     public void attack(int numOfPj, double speed) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         PhysicsAlt p = MainGame.returnGamePhysics();
+
         double x = getX()+getWidth()/4.0;
         double y = getY()+getHeight()/4.0;
         for(int i = 0; i < numOfPj; i++){
+            if(!isAttackRunning()){
+                break;
+            }
             double speedX = Math.cos(2*Math.PI*i/numOfPj);
             double speedY = Math.sin(2*Math.PI*i/numOfPj);
             Projectile pj = new Projectile(Resource.PROJECTILE_1, x, y, 20, 20, speedX*speed, speedY*speed);
@@ -186,11 +201,11 @@ public class Ethan extends Boss{
             p.addSprite(pj);
         }
     }
-    public void phoneAttack(int delay, int stage, int randNumMax, int randNumMin) throws InterruptedException, UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public void phoneAttack(int delay, int randNumMax, int randNumMin) throws InterruptedException, UnsupportedAudioFileException, LineUnavailableException, IOException {
         int rand = (int)(Math.random()*(randNumMax-randNumMin)) + randNumMin;
         for(int i = 0; i<rand; i++){
             double x = Math.random()*50-25;
-            if(stage()!=stage){
+            if(!isAttackRunning()){
                 break;
             }
             PhoneProjectile p = new PhoneProjectile(getX()+ x, getY()-10, x/12, 1, 1);

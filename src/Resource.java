@@ -46,11 +46,20 @@ public class Resource{
         }
     }
 
-    public static final Image DEFAULT_BACKGROUND;
+    public static final Image STAGE_1_BACKGROUND;
 
     static {
         try {
-            DEFAULT_BACKGROUND = ImageIO.read(new URL("https://stepbysteppainting.net/wp-content/uploads/2018/05/img_7468-e1526614302190-480x480.jpg"));
+            STAGE_1_BACKGROUND = ImageIO.read(new File("res/Stage1Background.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static final Image BOSS_BACKGROUND;
+
+    static {
+        try {
+            BOSS_BACKGROUND = ImageIO.read(new File("res/BossBackground.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -161,6 +170,15 @@ public class Resource{
     static {
         try {
             PHONE_CASE = ImageIO.read(new File("res/phoneCase.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static final Image ATTACK_BUBBLE;
+
+    static {
+        try {
+            ATTACK_BUBBLE = ImageIO.read(new File("res/attackBubble.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

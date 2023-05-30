@@ -3,43 +3,26 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Effect extends Sprite{
-    private int duration;
-    private Sprite sp;
-    public Effect(Image i, double x, double y, int width, int height, int duration) {
-        super(i, x, y, width, height, 0, 0);
-        sp = this;
+    private final int duration;
+    private int startTime = 0;
+    private int fadeStart;
 
-        Timer t = new Timer();
-        TimerTask tt = new TimerTask() {
-            int startTime = 0;
-            @Override
-            public void run() {
-                startTime++;
-                if(startTime>=duration){
-                    MainGame.returnGamePhysics().remove(sp);
-                    t.cancel();
-                }
-            }
-        };
-        t.scheduleAtFixedRate(tt, 0, 1);
-    }
-    public Effect(Image i, double x, double y, int width, int height, double speedX, double speedY, int duration) {
+
+    public Effect(Image i, double x, double y, int width, int height, double speedX, double speedY, int duration, int fadeStart) {
         super(i, x, y, width, height, speedX, speedY);
-        sp = this;
-
-        Timer t = new Timer();
-        TimerTask tt = new TimerTask() {
-            int startTime = 0;
-            @Override
-            public void run() {
-                startTime++;
-                if(startTime>=duration){
-                    MainGame.returnGamePhysics().remove(sp);
-                    t.cancel();
-                }
-            }
-        };
-        t.scheduleAtFixedRate(tt, 0, 1);
+        this.duration = duration;
+        this.fadeStart = fadeStart;
     }
 
+    @Override
+    public void act(){
+
+        if(startTime >= fadeStart){
+            setTransparency((float)(1-(startTime-fadeStart)/(double)(duration-fadeStart)));
+        }
+        startTime++;
+        if(startTime>=duration){
+            MainGame.returnGamePhysics().remove(this);
+        }
+    }
 }

@@ -87,16 +87,22 @@ public class Boss extends Sprite{
 
     }
     public void incrementAttackTime() throws InterruptedException {
+        centralTime -= 1.0/60;
         if(isRunning){
-            centralTime -= 1.0/60;
             MainGame.returnGraphicsWindow().bar.setTimeLeft((int)centralTime);
             MainGame.returnGraphicsWindow().bar.setPercentage(centralHealth/1000);
         }
         if(centralTime <= 0 || centralHealth <= 0){
             if(isRunning){
+                if(SpellCard.getAttackName()!=null){
+                    SpellCard.stop();
+                }
+                centralTime = 0;
                 t.cancel();
                 t.purge();
                 isRunning = false;
+            }
+            if(centralTime<-0.5){ //so it clears without any new projectiles carrying over
                 MainGame.returnGamePhysics().projectileSweep();
             }
             MainGame.returnGraphicsWindow().bar.setPercentage(MainGame.returnGraphicsWindow().bar.getPercentage()+0.01);
@@ -210,8 +216,8 @@ public class Boss extends Sprite{
         t.purge();
         moving = false;
     }
-    protected int stage(){
-        return attackStatus;
+    public boolean isAttackRunning(){
+        return isRunning;
     }
     public boolean isMoving(){
         return moving;

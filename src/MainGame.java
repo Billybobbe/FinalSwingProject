@@ -212,6 +212,7 @@ public class MainGame {
         TimerTask level1 = new TimerTask() {
             @Override
             public void run() {
+                /**
                 try {
                     Stage1(info, level1timer);
                 } catch (UnsupportedAudioFileException e) {
@@ -223,6 +224,7 @@ public class MainGame {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+                 **/
 
                 try {
                     Stage1Boss(info, level1timer);
@@ -241,6 +243,7 @@ public class MainGame {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+
 
             }
         };
@@ -289,7 +292,7 @@ public class MainGame {
             t.purge();
             return;
         }
-        MessageThing.setMessage("Hey guys, I like to eat Hamburglers.");
+        MessageThing.setMessage(new String[]{"Hey guys, I like to eat Hamburglers.", "Good for you"}, new Sprite(Resource.DEFAULT_PLAYER, 0, 0, 120, 240, 0, 0), new Sprite(Resource.ETHAN_IDLE, 0, 0, 120, 240, 0, 0));
         MessageThing.start();
         while(MessageThing.isDisplay()){
             gw.repaint();
@@ -300,6 +303,7 @@ public class MainGame {
         p.addSprite(ethan);
         game.setBackground(Color.red);
         while(p.getSpriteArray().contains(ethan)){
+            SpellCard.updateSpinny();
             try {
                 p.updatePhysics();
             } catch (IOException e) {
