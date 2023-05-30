@@ -34,7 +34,9 @@ public class MessageThing {
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == 90){
                     try {
-                        next();
+                        if(message!=null && isDisplay){
+                            next();
+                        }
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }

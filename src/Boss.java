@@ -36,7 +36,7 @@ public class Boss extends Sprite{
     public Boss(Image i, double x, double y, int width, int height, double speedX, double speedY,
                 int attack1Health, int attack1Time, int attack2Health, int attack2Time, int attack3Health,
                 int attack3Time, int attack4Health, int attack4Time, int attack5Health, int attack5Time,
-                Image[] rightAnim, Image[] leftAnim) throws IOException {
+                Image[] rightAnim, Image[] leftAnim, String bossName) throws IOException {
         super(i, x, y, width, height, speedX, speedY);
         this.attack1Health = attack1Health;
         this.attack1Time = attack1Time;
@@ -52,6 +52,7 @@ public class Boss extends Sprite{
         this.rightAnim = rightAnim;
         this.leftAnim = leftAnim;
         MainGame.returnGraphicsWindow().bar.setActive(true);
+        MainGame.returnGraphicsWindow().bar.setBossName(bossName);
         MainGame.returnGamePhysics().projectileSweep();
     }
 
@@ -59,7 +60,7 @@ public class Boss extends Sprite{
     public Timer attack1() {
         return new Timer();
     }
-    public Timer attack2(){
+    public Timer attack2() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         return new Timer();
     }
 
@@ -67,10 +68,10 @@ public class Boss extends Sprite{
         return new Timer();
     }
 
-    public Timer attack4(){
+    public Timer attack4() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         return new Timer();
     }
-    public Timer attack5(){
+    public Timer attack5() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         return new Timer();
     }
 
@@ -100,12 +101,15 @@ public class Boss extends Sprite{
                 centralTime = 0;
                 t.cancel();
                 t.purge();
+
                 isRunning = false;
             }
             if(centralTime<-0.5){ //so it clears without any new projectiles carrying over
                 MainGame.returnGamePhysics().projectileSweep();
             }
-            MainGame.returnGraphicsWindow().bar.setPercentage(MainGame.returnGraphicsWindow().bar.getPercentage()+0.01);
+            if(attackStatus!=5){
+                MainGame.returnGraphicsWindow().bar.setPercentage(MainGame.returnGraphicsWindow().bar.getPercentage()+0.01);
+            }
         }
     }
     public void move(double speed, double tarX, double tarY){
@@ -166,7 +170,7 @@ public class Boss extends Sprite{
     }
 
     public void runAttackIfNotActive() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        if(!isRunning && MainGame.returnGraphicsWindow().bar.getPercentage() >= 0.99) {
+        if(!isRunning && (MainGame.returnGraphicsWindow().bar.getPercentage() >= 0.99 || attackStatus==5)) {
             if (attackStatus == 0) {
                 isRunning = true;
                 t = attack1();
@@ -209,8 +213,14 @@ public class Boss extends Sprite{
     }
 
     @Override
-    public void remove(){
+    public void remove() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        MainGame.returnGamePhysics().projectileSweep();
         MainGame.returnGraphicsWindow().bar.setActive(false);
+
+        for(int i = 0; i<500; i++){
+            MainGame.returnGamePhysics().addSprite(new Effect(Resource.DEFAULT_ENEMY_DEATH, getX()+getWidth()/2.0-25, getY()+getHeight()/2.0-25, 50, 50, Math.random()*4-2, Math.random()*4-2, 1000, 700));
+        }
+
         MainGame.returnGamePhysics().remove(this);
         t.cancel();
         t.purge();

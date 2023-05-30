@@ -1,3 +1,4 @@
+import javax.print.DocFlavor;
 import java.awt.*;
 
 public class BossBar {
@@ -5,6 +6,8 @@ public class BossBar {
     private double percentage;
     private Color c;
     private int timeLeft;
+
+    private String bossName;
     public BossBar(){
         active = false;
         percentage = 0;
@@ -34,5 +37,12 @@ public class BossBar {
     }
     public void setActive(boolean b){
         active = b;
+    }
+
+    public void setBossName(String str){
+        bossName = str;
+    }
+    public String getBossName(){
+        return bossName;
     }
 }

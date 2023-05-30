@@ -212,19 +212,11 @@ public class MainGame {
         TimerTask level1 = new TimerTask() {
             @Override
             public void run() {
-                /**
                 try {
                     Stage1(info, level1timer);
-                } catch (UnsupportedAudioFileException e) {
-                    throw new RuntimeException(e);
-                } catch (LineUnavailableException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                 **/
 
                 try {
                     Stage1Boss(info, level1timer);
@@ -254,8 +246,9 @@ public class MainGame {
 
     }
     public static void Stage1(JPanel info, Timer t) throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
+        Clip c = playMusic("res/Return.wav");
         double lastTime = System.currentTimeMillis();
-        while(time/60.0/60<=0.15){
+        while(time/60.0/60<=0.5){
             spawnEnemies(0.01, 10);
             try {
                 p.updatePhysics();
@@ -282,9 +275,11 @@ public class MainGame {
                 throw new RuntimeException(e);
             }
             if(getLives()<=0){
+                c.close();
                 return;
             }
         }
+        c.close();
     }
     public static void Stage1Boss(JPanel info, Timer t) throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
         if(getLives()<=0){
@@ -331,9 +326,21 @@ public class MainGame {
             if(getLives()<=0){
                 c.close();
                 ethan.remove();
+                SpellCard.stop();
                 return;
             }
         }
+        if(getLives()>0){
+            int secondsOfRejoice = 10;
+            double incrementor = 0;
+            while(incrementor<secondsOfRejoice){
+                p.updatePhysics();
+                gw.repaint();
+                incrementor += 1/60.0;
+                Thread.sleep((long)16.6666666666);
+            }
+        }
+        SpellCard.stop();
         t.cancel();
         c.close();
     }

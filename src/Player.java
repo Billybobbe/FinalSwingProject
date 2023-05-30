@@ -156,6 +156,7 @@ public class Player extends Sprite implements KeyListener {
     }
 
     public void shoot() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        MainGame.playMusic("res/PlayerAttack.wav");
         MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/4.0, getY()+10, 10, 10, 0, -10, (MainGame.getNumPower()/127)*5+5));
         MainGame.returnGamePhysics().addSprite(new PlayerProjectile(Resource.DEFAULT_PLAYER_PROJECTILE, getX()+getWidth()/2.0, getY()+10, 10, 10, 0, -10, (MainGame.getNumPower()/127)*5+5));
     }

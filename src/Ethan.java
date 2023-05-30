@@ -9,7 +9,8 @@ public class Ethan extends Boss{
 
     public Ethan() throws IOException {
         super(Resource.ETHAN_IDLE, 200, -100, 60, 70, 0, 1, 1000, 40,
-                1000, 30, 1000, 40, 1000, 50, 1000, 70, Resource.ethanAnimRight, Resource.ethanAnimLeft);
+                1000, 30, 1000, 40, 1000, 50, 1000,
+                70, Resource.ethanAnimRight, Resource.ethanAnimLeft, "Ethan Lund");
         anim = new Animation(this);
         anim.setAnimation(100, Resource.ethanAttackAnim);
     }
@@ -39,7 +40,7 @@ public class Ethan extends Boss{
     }
 
     @Override
-    public Timer attack2() {
+    public Timer attack2() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         SpellCard.set(new Sprite(Resource.ETHAN_IDLE, 0, 0, 100, 100, 0, 0), "Douche Sign \"No case\"");
         Timer t = new Timer();
         TimerTask tt = new TimerTask() {
@@ -75,8 +76,8 @@ public class Ethan extends Boss{
         t.scheduleAtFixedRate(tt, 0, 1);
         return t;
     }
-    public Timer attack4(){
-        SpellCard.set(new Sprite(Resource.ETHAN_IDLE, 0, 0, 100, 100, 0, 0), "Test 2");
+    public Timer attack4() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        SpellCard.set(new Sprite(Resource.ETHAN_IDLE, 0, 0, 100, 100, 0, 0), "Douche Sign \"Dropped it\"");
         anim.play();
 
         Timer t = new Timer();
@@ -95,8 +96,8 @@ public class Ethan extends Boss{
         t.scheduleAtFixedRate(tt, 0, 1);
         return t;
     }
-    public Timer attack5(){
-        SpellCard.set(new Sprite(Resource.ETHAN_IDLE, 0, 0, 100, 100, 0, 0), "Test 3");
+    public Timer attack5() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        SpellCard.set(new Sprite(Resource.ETHAN_IDLE, 0, 0, 100, 100, 0, 0), "Douche Sign \"Broken Phone\"");
         anim.play();
 
         Timer t = new Timer();
@@ -208,6 +209,7 @@ public class Ethan extends Boss{
             if(!isAttackRunning()){
                 break;
             }
+            MainGame.playMusic("res/projectileSound.wav");
             PhoneProjectile p = new PhoneProjectile(getX()+ x, getY()-10, x/12, 1, 1);
             MainGame.returnGamePhysics().addSprite(p);
             Thread.sleep(delay);

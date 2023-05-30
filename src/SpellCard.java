@@ -1,4 +1,7 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
+import java.io.IOException;
 import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -15,13 +18,13 @@ public class SpellCard {
 
     private static boolean isPlaying;
 
-    private static final int textSize = 20;
+    private static final int textSize = 17;
 
     private static final int bossSize = 300;
 
     private static double rotation = 0;
 
-    public static void set(Sprite sp, String str){
+    public static void set(Sprite sp, String str) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         boss = sp;
         attackName = str;
         boss.setX(480);
@@ -54,7 +57,8 @@ public class SpellCard {
         t.schedule(tt, 0);
     }
 
-    private static void play(){
+    private static void play() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        MainGame.playMusic("res/SpellCard.wav");
         Timer t = new Timer();
         TimerTask tt = new TimerTask() {
             @Override

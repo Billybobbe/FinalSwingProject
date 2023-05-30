@@ -51,6 +51,9 @@ public class GraphicsWindow extends JPanel{
             TextLayout t = new TextLayout("" + bar.getTimeLeft(), new Font(Font.MONOSPACED, Font.BOLD, 30), g.getFontMetrics().getFontRenderContext());
             t.draw((Graphics2D) g, 420, 30);
 
+            t = new TextLayout(bar.getBossName(), new Font(Font.MONOSPACED, Font.BOLD, 15), g.getFontMetrics().getFontRenderContext());
+            t.draw((Graphics2D) g, 10, 25);
+
         }
         if(MessageThing.isDisplay()){
             AlphaComposite transparency = AlphaComposite.SrcOver;
@@ -84,7 +87,7 @@ public class GraphicsWindow extends JPanel{
             g2D.setComposite(AlphaComposite.SrcOver);
             g2D.setColor(new Color(0,0,0,100));
             g2D.fillRect((int)(415-SpellCard.getTextSize()*SpellCard.getAttackName().length()/1.6), SpellCard.getNameY(), (int)(SpellCard.getTextSize()*SpellCard.getAttackName().length()/1.6), SpellCard.getTextSize());
-            g2D.setColor(new Color(255, 255, 255, (int)(255*SpellCard.getNameTransparency())));
+            g2D.setColor(new Color(136, 233, 255, (int)(255*SpellCard.getNameTransparency())));
             TextLayout t = new TextLayout(SpellCard.getAttackName(), new Font(Font.MONOSPACED, Font.BOLD, SpellCard.getTextSize()), g.getFontMetrics().getFontRenderContext());
             t.draw((Graphics2D) g, (int)(415-SpellCard.getTextSize()*SpellCard.getAttackName().length()/1.6), SpellCard.getNameY()+15);
 
