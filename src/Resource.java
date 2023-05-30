@@ -36,7 +36,7 @@ public class Resource{
         }
     }
 
-    public static final Image DEFAULT_PROJECTILE;
+    /** public static final Image DEFAULT_PROJECTILE;
 
     static {
         try {
@@ -45,6 +45,7 @@ public class Resource{
             throw new RuntimeException(e);
         }
     }
+    **/
 
     public static final Image STAGE_1_BACKGROUND;
 

@@ -13,7 +13,7 @@ public class Projectile extends Sprite{
         super(i, x, y, width, height, speedX, speedY);
     }
     public Projectile(double x, double y, double speedX, double speedY) throws IOException {
-        super(Resource.DEFAULT_PROJECTILE,
+        super(Resource.PROJECTILE_1,
                 x, y, 10, 10, speedX, speedY);
     }
 }
