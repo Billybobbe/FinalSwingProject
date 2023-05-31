@@ -35,15 +35,15 @@ public class MainGame {
     public static void start() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         game = new JFrame();
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //game.setUndecorated(true);
+        game.setUndecorated(true);
         game.setSize(640,480);
         game.setResizable(false);
 
         game.setVisible(true);
 
         GraphicsDevice d = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        //d.setFullScreenWindow(game); //This part is for cool boi fullscreen
-        //d.setDisplayMode(new DisplayMode(640, 480, 32, 60));
+        d.setFullScreenWindow(game); //This part is for cool boi fullscreen
+        d.setDisplayMode(new DisplayMode(640, 480, 32, 60));
 
         Resource.loadAnimations();
         startTitle();
